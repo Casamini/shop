@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Casa Game Shop - Pro Mini App</title>
+    <title>Casa Game Shop - Official</title>
     
     <link rel="icon" type="image/png" href="https://i.imgur.com/your-logo.png">
 
@@ -34,8 +34,8 @@
                 <p class="text-gray-400 text-sm mt-1">1 week duration</p>
             </div>
             <div class="text-right">
-                <p class="text-2xl font-extrabold text-yellow-400">6,800 Ks</p>
-                <button onclick="order('Weekly Pass', 6800)" class="buy-btn text-white px-5 py-2 rounded-lg font-bold text-sm mt-2"> BUY NOW </button>
+                <p class="text-2xl font-extrabold text-yellow-400">7,000 Ks</p>
+                <button onclick="order('Weekly Pass', 7000)" class="buy-btn text-white px-5 py-2 rounded-lg font-bold text-sm mt-2"> BUY NOW </button>
             </div>
         </div>
     </div>
@@ -66,12 +66,13 @@
     </div>
 
     <script>
+        // စျေးနှုန်းများကို အနည်းငယ် တိုးမြှင့်ထားသော စာရင်း (Updated Packages with increased prices)
         const packages = [
-            { d: 11, p: 900 }, { d: 22, p: 1800 }, { d: 33, p: 2700 },
-            { d: 44, p: 3500 }, { d: 56, p: 4200 }, { d: 86, p: 5700 },
-            { d: 112, p: 7900 }, { d: 172, p: 11000 }, { d: 257, p: 16100 },
-            { d: 343, p: 21800 }, { d: 429, p: 26200 }, { d: 514, p: 31800 },
-            { d: 600, p: 36800 }, { d: 706, p: 42500 }, { d: 878, p: 52900 }
+            { d: 11, p: 950 }, { d: 22, p: 1900 }, { d: 33, p: 2850 },
+            { d: 44, p: 3700 }, { d: 56, p: 4400 }, { d: 86, p: 6000 },
+            { d: 112, p: 8200 }, { d: 172, p: 11400 }, { d: 257, p: 16900 },
+            { d: 343, p: 22800 }, { d: 429, p: 27500 }, { d: 514, p: 33000 },
+            { d: 600, p: 38200 }, { d: 706, p: 44200 }, { d: 878, p: 54900 }
         ];
 
         const container = document.getElementById('diamond-list');
@@ -90,6 +91,7 @@
             const zoneId = document.getElementById('zoneId').value;
             const alertText = document.getElementById('id-alert');
 
+            // ID Validation
             const isValidId = /^\d+$/.test(userId);
             const isValidZone = /^\d+$/.test(zoneId);
 
