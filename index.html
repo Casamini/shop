@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casa Game Shop - Mini App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #0b0f1a; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .card { background: #161b29; border: 1px solid #232d45; transition: transform 0.2s; }
+        .card:hover { transform: translateY(-5px); border-color: #3b82f6; }
+        .gradient-text { background: linear-gradient(90deg, #3b82f6, #2dd4bf); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body class="p-4">
+
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold gradient-text">CASA GAME SHOP</h1>
+        <p class="text-gray-400 text-sm mt-1">Fast Process with ID/SV ID in 3 Min</p>
+    </div>
+
+    <div class="card p-4 rounded-xl mb-6 flex justify-between items-center border-l-4 border-l-yellow-500">
+        <div>
+            <h2 class="font-bold text-lg">Weekly Diamond Pass</h2>
+            <p class="text-blue-400 font-bold text-xl">6,800 Ks</p>
+        </div>
+        <button onclick="order('Weekly Pass', 6800)" class="bg-yellow-500 text-black px-4 py-2 rounded-lg font-bold">BUY</button>
+    </div>
+
+    <h3 class="text-lg font-semibold mb-4 ml-1">Select Diamonds</h3>
+    <div class="grid grid-cols-2 gap-3" id="diamond-list">
+        </div>
+
+    <div class="mt-10 text-center pb-10">
+        <p class="text-gray-500 text-xs mb-2">Powered by Gemini Technology</p>
+        <a href="https://t.me/Casa4Ev1" class="bg-blue-600 px-6 py-3 rounded-full font-bold text-sm">
+            <i class="fab fa-telegram mr-2"></i>Contact Admin
+        </a>
+    </div>
+
+    <script>
+        const packages = [
+            { d: 11, p: 900 }, { d: 22, p: 1800 }, { d: 33, p: 2700 },
+            { d: 44, p: 3500 }, { d: 56, p: 4200 }, { d: 86, p: 5700 },
+            { d: 112, p: 7900 }, { d: 172, p: 11000 }, { d: 257, p: 16100 },
+            { d: 343, p: 21800 }, { d: 429, p: 26200 }, { d: 514, p: 31800 },
+            { d: 600, p: 36800 }, { d: 706, p: 42500 }, { d: 878, p: 52900 },
+            { d: 963, p: 57800 }, { d: 1049, p: 63300 }, { d: 1135, p: 68500 }
+        ];
+
+        const container = document.getElementById('diamond-list');
+        packages.forEach(pkg => {
+            container.innerHTML += `
+                <div class="card p-3 rounded-lg text-center cursor-pointer" onclick="order('${pkg.d} Diamonds', ${pkg.p})">
+                    <div class="text-blue-400 font-bold">💎 ${pkg.d}</div>
+                    <div class="text-sm font-semibold">${pkg.p.toLocaleString()} Ks</div>
+                </div>
+            `;
+        });
+
+        function order(item, price) {
+            const userId = prompt("Enter Game ID:");
+            const zoneId = prompt("Enter Zone ID:");
+            if(userId && zoneId) {
+                const message = `Order: ${item}%0APrice: ${price} Ks%0AID: ${userId} (${zoneId})`;
+                window.location.href = `https://t.me/Casa4Ev1?text=${message}`;
+            }
+        }
+    </script>
+</body>
+</html>
