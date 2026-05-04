@@ -3,268 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Casa Game Shop - Official</title>
+    <title>Casa Game Shop | Official</title>
     
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/kohtethtetnaywin015-stack/casagameshop-app/refs/heads/main/photo_2026-05-04_16-54-06.jpg">
+    <link rel="icon" type="image/png" href="https://i.imgur.com/your-logo.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <style>
-        body {
-            background-color: #0b0e14;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
+        
+        body { 
+            background-color: #080a0f; 
+            color: #e2e8f0; 
+            font-family: 'Rajdhani', sans-serif; 
+            background-image: radial-gradient(circle at top right, #1e293b, #080a0f);
         }
-        .hero-card {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border: 1px solid #334155;
+        .glass-card { 
+            background: rgba(30, 41, 59, 0.4); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            border-radius: 20px;
         }
-        .game-card {
-            background: #111827;
-            border: 1px solid #1f2937;
-            border-radius: 10px;
-            transition: all 0.2s ease-in-out;
-        }
-        .game-card:hover {
-            border-color: #3b82f6;
-            transform: translateY(-2px);
-        }
-        .custom-input {
-            background-color: #111827;
-            border: 1px solid #374151;
-            color: #ffffff;
-            transition: all 0.2s;
-        }
-        .custom-input:focus {
-            outline: none;
-            border-color: #2563eb;
-            box-shadow: 0 0 5px rgba(37, 99, 235, 0.5);
-        }
-        .tab-btn {
-            background-color: #1f2937;
-            color: #9ca3af;
-            border: 1px solid #374151;
-        }
-        .tab-btn.active {
-            background-color: #2563eb;
-            color: #ffffff;
-            border-color: #3b82f6;
-        }
+        .active-tab { background: #3b82f6; color: white; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+        .package-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
+        .package-card:hover { transform: translateY(-5px); border-color: #3b82f6; background: rgba(59, 130, 246, 0.1); }
+        .neon-text { text-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
+        input:focus { outline: none; border-color: #3b82f6; }
+        
+        /* Toast Notification */
+        #toast { visibility: hidden; min-width: 200px; background: #3b82f6; color: white; border-radius: 8px; padding: 12px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 100; font-weight: bold; }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
     </style>
 </head>
-<body class="max-w-md mx-auto p-4">
+<body class="p-4 max-w-lg mx-auto">
 
-    <div class="text-center my-6">
-        <div class="w-20 h-20 mx-auto mb-4 bg-gray-900 rounded-full flex items-center justify-center border-2 border-blue-500 shadow-xl overflow-hidden">
-            <img src="https://raw.githubusercontent.com/kohtethtetnaywin015-stack/casagameshop-app/main/photo_2026-05-04_16-54-06.jpg" alt="Channel Logo" class="w-full h-full object-cover">
+    <div id="toast">Copied!</div>
+
+    <header class="text-center mb-8 pt-4">
+        <div class="relative inline-block">
+            <img src="https://i.imgur.com/your-logo.png" alt="Casa Logo" class="w-24 h-24 mx-auto rounded-full border-2 border-blue-500 p-1 shadow-[0_0_20px_rgba(59,130,246,0.5)] mb-4 object-cover">
+            <span class="absolute bottom-4 right-1 w-5 h-5 bg-green-500 border-4 border-[#080a0f] rounded-full"></span>
         </div>
-        <h1 class="text-2xl font-black text-blue-400 tracking-wider">CASA GAME SHOP</h1>
-        <p class="text-xs text-gray-500 uppercase tracking-widest mt-1">All Games In One Platform</p>
-    </div>
+        <h1 class="text-3xl font-bold tracking-tighter text-white neon-text uppercase" style="font-family: 'Orbitron';">CASA GAME SHOP</h1>
+        <p class="text-[10px] text-blue-400 tracking-[0.3em] font-bold mt-1 uppercase">Official Top-up Service</p>
+    </header>
 
-    <div class="flex space-x-3 mb-6">
-        <button onclick="switchCategory('mlbb')" id="tab-mlbb" class="tab-btn active flex-1 py-2 px-3 rounded-lg text-xs font-bold text-center">
-            <i class="fas fa-shield-alt mr-1"></i> MLBB
-        </button>
-        <button onclick="switchCategory('pubg')" id="tab-pubg" class="tab-btn flex-1 py-2 px-3 rounded-lg text-xs font-bold text-center">
-            <i class="fas fa-crosshairs mr-1"></i> PUBG
-        </button>
-    </div>
+    <nav class="flex gap-2 mb-6 overflow-x-auto pb-2 scrollbar-hide">
+        <button onclick="changeGame('mlbb')" id="tab-mlbb" class="active-tab px-6 py-2 rounded-xl font-bold text-xs flex-none">MLBB</button>
+        <button onclick="changeGame('pubg')" id="tab-pubg" class="glass-card px-6 py-2 rounded-xl font-bold text-xs flex-none text-gray-400">PUBG</button>
+        <button onclick="changeGame('ff')" id="tab-ff" class="glass-card px-6 py-2 rounded-xl font-bold text-xs flex-none text-gray-400">FREE FIRE</button>
+    </nav>
 
-    <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl mb-6 shadow-md">
-        <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
-            <i class="fas fa-user-circle text-blue-400 mr-2"></i> Account Details
-        </h3>
-        <div class="grid grid-cols-2 gap-3">
-            <div>
-                <label id="lbl-id" class="text-[10px] text-gray-500 uppercase">Game ID</label>
-                <input type="text" id="userId" placeholder="Enter ID" class="custom-input w-full p-2 text-sm rounded mt-1">
-            </div>
-            <div>
-                <label id="lbl-zone" class="text-[10px] text-gray-500 uppercase">Zone ID</label>
-                <input type="text" id="zoneId" placeholder="Enter SV ID" class="custom-input w-full p-2 text-sm rounded mt-1">
-            </div>
+    <section class="glass-card p-5 mb-6">
+        <div class="flex items-center gap-2 mb-4 text-blue-400 font-bold text-xs uppercase">
+            <i class="fas fa-user-tag"></i> <span>Account Info</span>
         </div>
-        <p id="alert-msg" class="text-red-400 text-[10px] mt-2 hidden"><i class="fas fa-exclamation-circle mr-1"></i> ဂဏန်းများကိုသာ ထည့်သွင်းပေးပါ။</p>
-    </div>
+        <div class="grid grid-cols-2 gap-4">
+            <input type="text" id="userId" placeholder="Player ID" class="bg-slate-900/50 border border-slate-700 p-3 rounded-xl text-sm font-bold w-full">
+            <input type="text" id="zoneId" placeholder="Zone/Name" class="bg-slate-900/50 border border-slate-700 p-3 rounded-xl text-sm font-bold w-full">
+        </div>
+    </section>
 
-    <div id="mlbb-sections" class="space-y-6">
-        <div>
-            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
-                <i class="fas fa-gift text-blue-400 mr-2"></i> Bundles & Passes
-            </h3>
-            <div class="grid grid-cols-2 gap-3">
-                <div class="game-card p-3 text-center cursor-pointer" onclick="order('Limited time value pack', 1200)">
-                    <div class="text-blue-400 font-extrabold text-xs mb-1">🔥 Value Pack</div>
-                    <div class="text-[9px] text-gray-500 tracking-wider">Limited Time</div>
-                    <div class="text-yellow-400 text-xs font-extrabold mt-3">1,200 Ks</div>
+    <section class="mb-6">
+        <div class="flex items-center gap-2 mb-4 text-blue-400 font-bold text-xs uppercase">
+            <i class="fas fa-box-open"></i> <span>Select Package</span>
+        </div>
+        <div id="package-list" class="grid grid-cols-3 gap-3">
+            </div>
+    </section>
+
+    <section class="glass-card p-5 mb-6 border-dashed border-slate-600">
+        <div class="text-xs font-bold text-yellow-500 mb-4 uppercase">Payment (Click to Copy)</div>
+        <div class="space-y-3">
+            <div onclick="copyNum('09786xxxxxx', 'KPay')" class="flex items-center justify-between bg-slate-900/80 p-3 rounded-xl border border-slate-700 cursor-pointer">
+                <div class="flex items-center gap-3">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/KBZ_Pay_logo.png" class="w-6 h-6">
+                    <span class="text-sm font-bold">09786xxxxxx</span>
                 </div>
-                <div class="game-card p-3 text-center cursor-pointer" onclick="order('Weekly elite bundle', 3600)">
-                    <div class="text-blue-400 font-extrabold text-xs mb-1">💎 55 + 🌟 20</div>
-                    <div class="text-[9px] text-gray-500 tracking-wider">Weekly Elite</div>
-                    <div class="text-yellow-400 text-xs font-extrabold mt-3">3,600 Ks</div>
+                <i class="far fa-copy text-slate-500 text-xs"></i>
+            </div>
+            <div onclick="copyNum('09965xxxxxx', 'Wave')" class="flex items-center justify-between bg-slate-900/80 p-3 rounded-xl border border-slate-700 cursor-pointer">
+                <div class="flex items-center gap-3">
+                    <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple122/v4/3d/8c/fd/3d8cfd9e-1087-0b16-953b-f7f502d90610/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/512x512bb.jpg" class="w-6 h-6">
+                    <span class="text-sm font-bold">09965xxxxxx</span>
                 </div>
-                <div class="game-card p-3 text-center cursor-pointer" onclick="order('Weekly Pass', 6800)">
-                    <div class="text-blue-400 font-extrabold text-xs mb-1">💎 Weekly Pass</div>
-                    <div class="text-[9px] text-gray-500 tracking-wider">Pass Duration</div>
-                    <div class="text-yellow-400 text-xs font-extrabold mt-3">6,800 Ks</div>
-                </div>
-                <div class="game-card p-3 text-center cursor-pointer" onclick="order('Monthly epic bundle', 17300)">
-                    <div class="text-blue-400 font-extrabold text-xs mb-1">💎 275 + 🌟 180</div>
-                    <div class="text-[9px] text-gray-500 tracking-wider">Monthly Epic</div>
-                    <div class="text-yellow-400 text-xs font-extrabold mt-3">17,300 Ks</div>
-                </div>
+                <i class="far fa-copy text-slate-500 text-xs"></i>
             </div>
         </div>
+    </section>
 
-        <div>
-            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
-                <i class="fas fa-bolt text-blue-400 mr-2"></i> 2️⃣✖️ (Diamond 2X) Plan
-            </h3>
-            <div class="grid grid-cols-2 gap-3">
-                <div class="game-card p-3 text-center cursor-pointer" onclick="order('2X - 50 (+50 Bonus) Diamonds', 3900)">
-                    <div class="text-blue-400 font-extrabold text-xs mb-1">💎 50 + 50</div>
-                    <div class="text-[9px] text-gray-500 tracking-wider">Diamond 2X Plan</div>
-                    <div class="text-yellow-400 text-xs font-extrabold mt-3">3,900 Ks</div>
-                </div>
-                <div class="game-card p-3 text-center cursor-pointer" onclick="order('2X - 150 (+150 Bonus) Diamonds', 10900)">
-                    <div class="text-blue-400 font-extrabold text-xs mb-1">💎 150 + 150</div>
-                    <div class="text-[9px] text-gray-500 tracking-wider">Diamond 2X Plan</div>
-                    <div class="text-yellow-400 text-xs font-extrabold mt-3">10,900 Ks</div>
-                </div>
-                <div class="game-card p-3 text-center cursor-pointer" onclick="order('2X - 250 (+250 Bonus) Diamonds', 17200)">
-                    <div class="text-blue-400 font-extrabold text-xs mb-1">💎 250 + 250</div>
-                    <div class="text-[9px] text-gray-500 tracking-wider">Diamond 2X Plan</div>
-                    <div class="text-yellow-400 text-xs font-extrabold mt-3">17,200 Ks</div>
-                </div>
-                <div class="game-card p-3 text-center cursor-pointer" onclick="order('2X - 500 (+500 Bonus) Diamonds', 34500)">
-                    <div class="text-blue-400 font-extrabold text-xs mb-1">💎 500 + 500</div>
-                    <div class="text-[9px] text-gray-500 tracking-wider">Diamond 2X Plan</div>
-                    <div class="text-yellow-400 text-xs font-extrabold mt-3">34,500 Ks</div>
-                </div>
+    <section class="glass-card p-5 mb-8">
+        <div class="text-xs font-bold text-purple-400 mb-4 uppercase">Upload Slip</div>
+        <label class="block w-full h-24 bg-slate-900/50 border-2 border-dashed border-slate-700 rounded-2xl cursor-pointer overflow-hidden relative">
+            <input type="file" id="slip" class="hidden" onchange="preview(event)" accept="image/*">
+            <div id="upload-txt" class="flex flex-col items-center justify-center h-full text-slate-500">
+                <i class="fas fa-image mb-1"></i>
+                <span class="text-[10px] font-bold">SELECT RECEIPT</span>
             </div>
-        </div>
+            <img id="previewImg" class="hidden absolute inset-0 w-full h-full object-contain p-2">
+        </label>
+    </section>
 
-        <div>
-            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
-                <i class="fas fa-gem text-blue-400 mr-2"></i> Standard Packages
-            </h3>
-            <div class="grid grid-cols-3 gap-3" id="package-grid"></div>
-        </div>
-    </div>
+    <button onclick="sendOrder()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 py-4 rounded-2xl font-black text-white shadow-[0_10px_20px_rgba(59,130,246,0.3)] hover:scale-[1.02] active:scale-95 transition-all mb-10">
+        SEND ORDER TO TELEGRAM <i class="fas fa-paper-plane ml-2"></i>
+    </button>
 
-    <div class="text-center mt-12 pb-6">
-        <p class="text-[10px] text-gray-600 mb-3">Powered by Casa Game Shop &copy; 2026</p>
-        <a href="https://t.me/Casa4Ev1" class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xs font-bold py-2.5 px-6 rounded-full shadow">
-            <i class="fab fa-telegram mr-1"></i> Contact Admin
-        </a>
-    </div>
+    <footer class="text-center pb-8 opacity-40">
+        <p class="text-[8px] font-bold tracking-[0.5em] uppercase">Casa Game Shop Premium v2.0</p>
+    </footer>
 
     <script>
-        let currentCategory = 'mlbb';
+        let selectedGame = 'mlbb';
+        let selectedPackage = null;
 
-        const data = {
+        const prices = {
             mlbb: [
-                { d: 11, p: 900 }, { d: 22, p: 1800 }, { d: 33, p: 2700 },
-                { d: 44, p: 3500 }, { d: 56, p: 4200 }, { d: 86, p: 5700 },
-                { d: 112, p: 7900 }, { d: 172, p: 11000 }, { d: 257, p: 16100 },
-                { d: 343, p: 21800 }, { d: 429, p: 26200 }, { d: 514, p: 31800 },
-                { d: 600, p: 36800 }, { d: 706, p: 42500 }, { d: 878, p: 52900 },
-                { d: 963, p: 57800 }, { d: 1049, p: 63300 }, { d: 1135, p: 68500 },
-                { d: 1412, p: 83800 }, { d: 2195, p: 126500 }, { d: 2901, p: 168500 },
-                { d: 3688, p: 211500 }, { d: 5532, p: 319800 }, { d: 9288, p: 529800 }
+                {d: 11, p: 900}, {d: 56, p: 4300}, {d: 112, p: 8100}, 
+                {d: 257, p: 16500}, {d: 706, p: 43500}, {d: "Weekly Pass", p: 6800}
             ],
             pubg: [
-                { d: 60, p: 1900 }, { d: 325, p: 9500 }, { d: 660, p: 18500 },
-                { d: 1800, p: 49500 }, { d: 3850, p: 95000 }, { d: 8100, p: 185000 }
+                {d: 60, p: 1850}, {d: 325, p: 9200}, {d: 660, p: 18200}, {d: 1800, p: 48500}
+            ],
+            ff: [
+                {d: 100, p: 2400}, {d: 210, p: 4700}, {d: 530, p: 11200}
             ]
         };
 
-        function switchCategory(category) {
-            currentCategory = category;
-            
-            document.getElementById('tab-mlbb').classList.toggle('active', category === 'mlbb');
-            document.getElementById('tab-pubg').classList.toggle('active', category === 'pubg');
-
-            const lblId = document.getElementById('lbl-id');
-            const lblZone = document.getElementById('lbl-zone');
-            const mlbbSections = document.getElementById('mlbb-sections');
-
-            if (category === 'mlbb') {
-                lblId.innerText = "Game ID";
-                lblZone.innerText = "Zone ID";
-                mlbbSections.style.display = 'block';
-                renderPackages();
-            } else {
-                lblId.innerText = "PUBG Character ID";
-                lblZone.innerText = "Player Name";
-                mlbbSections.style.display = 'none';
-                renderPubgPackages();
-            }
+        function changeGame(game) {
+            selectedGame = game;
+            selectedPackage = null;
+            document.querySelectorAll('nav button').forEach(btn => btn.className = 'glass-card px-6 py-2 rounded-xl font-bold text-xs flex-none text-gray-400');
+            document.getElementById(`tab-${game}`).className = 'active-tab px-6 py-2 rounded-xl font-bold text-xs flex-none';
+            render();
         }
 
-        function renderPackages() {
-            const grid = document.getElementById('package-grid');
-            grid.innerHTML = '';
-            
-            data.mlbb.forEach(pkg => {
-                grid.innerHTML += `
-                    <div class="game-card p-3 text-center cursor-pointer" onclick="order('💎 ${pkg.d} Diamonds', ${pkg.p})">
-                        <div class="text-blue-400 font-extrabold text-xs mb-1">💎 ${pkg.d}</div>
-                        <div class="text-[9px] uppercase text-gray-500 tracking-wider">MLBB</div>
-                        <div class="text-yellow-400 text-xs font-extrabold mt-3">${pkg.p.toLocaleString()} Ks</div>
-                    </div>
+        function render() {
+            const list = document.getElementById('package-list');
+            list.innerHTML = '';
+            prices[selectedGame].forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = 'glass-card p-4 package-card text-center';
+                div.id = `item-${idx}`;
+                div.onclick = () => {
+                    selectedPackage = item;
+                    document.querySelectorAll('.package-card').forEach(c => c.style.borderColor = 'rgba(255,255,255,0.05)');
+                    div.style.borderColor = '#3b82f6';
+                };
+                div.innerHTML = `
+                    <div class="text-blue-400 font-black text-sm">${item.d}</div>
+                    <div class="text-xs text-yellow-500 font-bold mt-1">${item.p.toLocaleString()} K</div>
                 `;
+                list.appendChild(div);
             });
         }
 
-        function renderPubgPackages() {
-            const grid = document.getElementById('package-grid');
-            grid.innerHTML = '';
-            
-            data.pubg.forEach(pkg => {
-                grid.innerHTML += `
-                    <div class="game-card p-3 text-center cursor-pointer" onclick="order('🔥 ${pkg.d} UC', ${pkg.p})">
-                        <div class="text-blue-400 font-extrabold text-xs mb-1">🔥 ${pkg.d} UC</div>
-                        <div class="text-[9px] uppercase text-gray-500 tracking-wider">PUBG</div>
-                        <div class="text-yellow-400 text-xs font-extrabold mt-3">${pkg.p.toLocaleString()} Ks</div>
-                    </div>
-                `;
-            });
+        function copyNum(num, name) {
+            navigator.clipboard.writeText(num);
+            const toast = document.getElementById('toast');
+            toast.innerText = `${name} Number Copied!`;
+            toast.className = 'show';
+            setTimeout(() => { toast.className = ''; }, 3000);
         }
 
-        function order(pkgName, price) {
-            const userId = document.getElementById('userId').value;
-            const zoneId = document.getElementById('zoneId').value;
-            const alertMsg = document.getElementById('alert-msg');
-
-            if (!userId || !zoneId) {
-                alert("⚠️ ကျေးဇူးပြု၍ အချက်အလက်များ အရင်ဖြည့်ပေးပါ");
-                return;
-            }
-
-            if (currentCategory === 'mlbb') {
-                const isIdValid = /^\d+$/.test(userId);
-                const isZoneValid = /^\d+$/.test(zoneId);
-                
-                if (!isIdValid || !isZoneValid) {
-                    alertMsg.classList.remove('hidden');
-                    return;
-                } else {
-                    alertMsg.classList.add('hidden');
+        function preview(e) {
+            const file = e.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const img = document.getElementById('previewImg');
+                    img.src = reader.result;
+                    img.classList.remove('hidden');
+                    document.getElementById('upload-txt').classList.add('hidden');
                 }
-            } else {
-                alertMsg.classList.add('hidden');
+                reader.readAsDataURL(file);
             }
-
-            const textMsg = `Game: ${currentCategory.toUpperCase()}%0APackage: ${pkgName}%0APrice: ${price} Ks%0AID: ${userId} (${zoneId})`;
-            window.location.href = `https://t.me/Casa4Ev1?text=${textMsg}`;
         }
 
-        // Initialize MLBB
-        renderPackages();
-        switchCategory('mlbb');
+        function sendOrder() {
+            const id = document.getElementById('userId').value;
+            const zone = document.getElementById('zoneId').value;
+            if(!id || !zone || !selectedPackage) return alert("Fill all details!");
+            
+            const msg = `Order: ${selectedGame.toUpperCase()}%0AItem: ${selectedPackage.d}%0APrice: ${selectedPackage.p} Ks%0AID: ${id} (${zone})%0A---%0APayment Slip attached below.`;
+            window.location.href = `https://t.me/Casa4Ev1?text=${msg}`;
+        }
+
+        render();
     </script>
 </body>
 </html>
