@@ -3,38 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Casa Game Shop - Mini App</title>
+    <title>Casa Game Shop - Pro Mini App</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #0b0f1a; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .card { background: #161b29; border: 1px solid #232d45; transition: transform 0.2s; }
-        .card:hover { transform: translateY(-5px); border-color: #3b82f6; }
-        .gradient-text { background: linear-gradient(90deg, #3b82f6, #2dd4bf); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        body { background-color: #0d1117; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .hero-banner { background: linear-gradient(135deg, #1f2937 0%, #111827 100%); border: 1px solid #374151; }
+        .card-item { background: #1a202c; border: 1px solid #2d3748; border-radius: 12px; transition: all 0.3s ease; }
+        .card-item:hover { transform: translateY(-3px); border-color: #3b82f6; box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2); }
+        .buy-btn { background: linear-gradient(90deg, #3b82f6, #1d4ed8); transition: 0.3s; }
+        .buy-btn:hover { filter: brightness(1.2); }
     </style>
 </head>
-<body class="p-4">
+<body class="p-4 max-w-md mx-auto">
 
-    <div class="text-center mb-8">
-        <h1 class="text-3xl font-bold gradient-text">CASA GAME SHOP</h1>
-        <p class="text-gray-400 text-sm mt-1">Fast Process with ID/SV ID in 3 Min</p>
+    <div class="text-center mb-6 mt-2">
+        <h1 class="text-3xl font-black tracking-wider text-blue-400">CASA GAME SHOP</h1>
+        <p class="text-gray-400 text-xs mt-1 uppercase tracking-widest">Fast Process In 3 Min with ID/SV ID</p>
     </div>
 
-    <div class="card p-4 rounded-xl mb-6 flex justify-between items-center border-l-4 border-l-yellow-500">
-        <div>
-            <h2 class="font-bold text-lg">Weekly Diamond Pass</h2>
-            <p class="text-blue-400 font-bold text-xl">6,800 Ks</p>
+    <div class="hero-banner p-4 rounded-xl mb-6 shadow-lg">
+        <div class="flex items-center justify-between">
+            <div>
+                <span class="bg-blue-600/20 text-blue-400 px-2 py-1 rounded text-xs font-semibold">🔥 Hot Offer</span>
+                <h2 class="text-lg font-bold mt-2">Weekly Diamond Pass</h2>
+                <p class="text-gray-400 text-sm mt-1">1 week duration</p>
+            </div>
+            <div class="text-right">
+                <p class="text-2xl font-extrabold text-yellow-400">6,800 Ks</p>
+                <button onclick="order('Weekly Pass', 6800)" class="buy-btn text-white px-5 py-2 rounded-lg font-bold text-sm mt-2"> BUY NOW </button>
+            </div>
         </div>
-        <button onclick="order('Weekly Pass', 6800)" class="bg-yellow-500 text-black px-4 py-2 rounded-lg font-bold">BUY</button>
     </div>
 
-    <h3 class="text-lg font-semibold mb-4 ml-1">Select Diamonds</h3>
-    <div class="grid grid-cols-2 gap-3" id="diamond-list">
+    <div class="bg-gray-900 p-4 rounded-xl border border-gray-800 mb-6">
+        <h3 class="text-sm font-bold text-gray-300 mb-3"><i class="fas fa-user-circle mr-2 text-blue-400"></i>ENTER ACCOUNT DETAILS</h3>
+        <div class="grid grid-cols-2 gap-3">
+            <div>
+                <label class="text-xs text-gray-500">Game ID (e.g. 12345678)</label>
+                <input type="text" id="userId" placeholder="Enter ID" class="w-full mt-1 p-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-blue-500 text-sm">
+            </div>
+            <div>
+                <label class="text-xs text-gray-500">Zone ID (e.g. 1234)</label>
+                <input type="text" id="zoneId" placeholder="Enter SV ID" class="w-full mt-1 p-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-blue-500 text-sm">
+            </div>
         </div>
+    </div>
 
-    <div class="mt-10 text-center pb-10">
-        <p class="text-gray-500 text-xs mb-2">Powered by Gemini Technology</p>
-        <a href="https://t.me/Casa4Ev1" class="bg-blue-600 px-6 py-3 rounded-full font-bold text-sm">
+    <h3 class="text-sm font-bold text-gray-400 mb-4 tracking-wider"><i class="fas fa-gem mr-2 text-blue-400"></i>SELECT DIAMOND PACKAGES</h3>
+    <div class="grid grid-cols-3 gap-3" id="diamond-list"></div>
+
+    <div class="mt-10 text-center pb-8">
+        <p class="text-gray-600 text-xs mb-3">Powered by Casa Game Shop © 2026</p>
+        <a href="https://t.me/Casa4Ev1" class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-full font-bold text-sm shadow-md">
             <i class="fab fa-telegram mr-2"></i>Contact Admin
         </a>
     </div>
@@ -45,27 +66,31 @@
             { d: 44, p: 3500 }, { d: 56, p: 4200 }, { d: 86, p: 5700 },
             { d: 112, p: 7900 }, { d: 172, p: 11000 }, { d: 257, p: 16100 },
             { d: 343, p: 21800 }, { d: 429, p: 26200 }, { d: 514, p: 31800 },
-            { d: 600, p: 36800 }, { d: 706, p: 42500 }, { d: 878, p: 52900 },
-            { d: 963, p: 57800 }, { d: 1049, p: 63300 }, { d: 1135, p: 68500 }
+            { d: 600, p: 36800 }, { d: 706, p: 42500 }, { d: 878, p: 52900 }
         ];
 
         const container = document.getElementById('diamond-list');
         packages.forEach(pkg => {
             container.innerHTML += `
-                <div class="card p-3 rounded-lg text-center cursor-pointer" onclick="order('${pkg.d} Diamonds', ${pkg.p})">
-                    <div class="text-blue-400 font-bold">💎 ${pkg.d}</div>
-                    <div class="text-sm font-semibold">${pkg.p.toLocaleString()} Ks</div>
+                <div class="card-item p-3 text-center cursor-pointer" onclick="order('${pkg.d} Diamonds', ${pkg.p})">
+                    <div class="text-blue-400 text-xl font-extrabold mb-1">💎 ${pkg.d}</div>
+                    <div class="text-xs font-medium text-gray-400">MLBB</div>
+                    <div class="text-xs font-extrabold text-yellow-400 mt-2">${pkg.p.toLocaleString()} Ks</div>
                 </div>
             `;
         });
 
         function order(item, price) {
-            const userId = prompt("Enter Game ID:");
-            const zoneId = prompt("Enter Zone ID:");
-            if(userId && zoneId) {
-                const message = `Order: ${item}%0APrice: ${price} Ks%0AID: ${userId} (${zoneId})`;
-                window.location.href = `https://t.me/Casa4Ev1?text=${message}`;
+            const userId = document.getElementById('userId').value;
+            const zoneId = document.getElementById('zoneId').value;
+            
+            if(!userId || !zoneId) {
+                alert("⚠️ ကျေးဇူးပြု၍ Game ID နှင့် SV ID ကို အရင်ဖြည့်ပေးပါ!");
+                return;
             }
+            
+            const message = `Order: ${item}%0APrice: ${price} Ks%0AID: ${userId} (${zoneId})`;
+            window.location.href = `https://t.me/Casa4Ev1?text=${message}`;
         }
     </script>
 </body>
