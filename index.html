@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Casa Game Shop - Official</title>
+    <title>Casa Game Shop - All Games</title>
     
     <link rel="icon" type="image/png" href="https://i.imgur.com/your-logo.png">
 
@@ -16,6 +16,8 @@
         .card-item:hover { transform: translateY(-3px); border-color: #3b82f6; box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2); }
         .buy-btn { background: linear-gradient(90deg, #3b82f6, #1d4ed8); transition: 0.3s; }
         .buy-btn:hover { filter: brightness(1.2); }
+        .tab-btn { background: #1f2937; border: 1px solid #374151; }
+        .tab-btn.active { background: #2563eb; border-color: #3b82f6; color: #ffffff; }
     </style>
 </head>
 <body class="p-4 max-w-md mx-auto">
@@ -23,40 +25,35 @@
     <div class="text-center mb-6 mt-2">
         <img src="https://i.imgur.com/your-logo.png" alt="Casa Game Shop Logo" class="w-20 h-20 mx-auto rounded-full border-2 border-blue-500 shadow-lg mb-3 object-cover">
         <h1 class="text-3xl font-black tracking-wider text-blue-400">CASA GAME SHOP</h1>
-        <p class="text-gray-400 text-xs mt-1 uppercase tracking-widest">Fast Process In 3 Min with ID/SV ID</p>
+        <p class="text-gray-400 text-xs mt-1 uppercase tracking-widest">All Games In One Platform</p>
     </div>
 
-    <div class="hero-banner p-4 rounded-xl mb-6 shadow-lg">
-        <div class="flex items-center justify-between">
-            <div>
-                <span class="bg-blue-600/20 text-blue-400 px-2 py-1 rounded text-xs font-semibold">🔥 Hot Offer</span>
-                <h2 class="text-lg font-bold mt-2">Weekly Diamond Pass</h2>
-                <p class="text-gray-400 text-sm mt-1">1 week duration</p>
-            </div>
-            <div class="text-right">
-                <p class="text-2xl font-extrabold text-yellow-400">7,000 Ks</p>
-                <button onclick="order('Weekly Pass', 7000)" class="buy-btn text-white px-5 py-2 rounded-lg font-bold text-sm mt-2"> BUY NOW </button>
-            </div>
-        </div>
+    <div class="flex justify-around mb-6">
+        <button onclick="switchCategory('mlbb')" id="btn-mlbb" class="tab-btn active px-4 py-2 rounded-lg font-bold text-xs flex-1 mr-2">
+            <i class="fas fa-shield-alt mr-1"></i> MLBB
+        </button>
+        <button onclick="switchCategory('pubg')" id="btn-pubg" class="tab-btn px-4 py-2 rounded-lg font-bold text-xs flex-1 ml-2">
+            <i class="fas fa-crosshairs mr-1"></i> PUBG
+        </button>
     </div>
 
     <div class="bg-gray-900 p-4 rounded-xl border border-gray-800 mb-6">
         <h3 class="text-sm font-bold text-gray-300 mb-3"><i class="fas fa-user-circle mr-2 text-blue-400"></i>ENTER ACCOUNT DETAILS</h3>
         <div class="grid grid-cols-2 gap-3">
             <div>
-                <label class="text-xs text-gray-500">Game ID (e.g. 12345678)</label>
+                <label id="id-label" class="text-xs text-gray-500">Game ID (e.g. 12345678)</label>
                 <input type="text" id="userId" placeholder="Enter ID" class="w-full mt-1 p-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-blue-500 text-sm">
             </div>
             <div>
-                <label class="text-xs text-gray-500">Zone ID (e.g. 1234)</label>
+                <label id="zone-label" class="text-xs text-gray-500">Zone ID (e.g. 1234)</label>
                 <input type="text" id="zoneId" placeholder="Enter SV ID" class="w-full mt-1 p-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-blue-500 text-sm">
             </div>
         </div>
-        <p id="id-alert" class="text-red-400 text-xs mt-2 hidden"><i class="fas fa-exclamation-circle mr-1"></i>Game ID နှင့် Zone ID သည် ဂဏန်းသီးသန့်ဖြစ်ရမည်။</p>
+        <p id="id-alert" class="text-red-400 text-xs mt-2 hidden"><i class="fas fa-exclamation-circle mr-1"></i>ကျေးဇူးပြု၍ ဂဏန်းများကိုသာ ထည့်သွင်းပေးပါ။</p>
     </div>
 
-    <h3 class="text-sm font-bold text-gray-400 mb-4 tracking-wider"><i class="fas fa-gem mr-2 text-blue-400"></i>SELECT DIAMOND PACKAGES</h3>
-    <div class="grid grid-cols-3 gap-3" id="diamond-list"></div>
+    <h3 class="text-sm font-bold text-gray-400 mb-4 tracking-wider"><i class="fas fa-gem mr-2 text-blue-400"></i>SELECT PACKAGES</h3>
+    <div class="grid grid-cols-3 gap-3" id="package-list"></div>
 
     <div class="mt-10 text-center pb-8">
         <p class="text-gray-600 text-xs mb-3">Powered by Casa Game Shop © 2026</p>
@@ -66,50 +63,93 @@
     </div>
 
     <script>
-        // စျေးနှုန်းများကို အနည်းငယ် တိုးမြှင့်ထားသော စာရင်း (Updated Packages with increased prices)
-        const packages = [
-            { d: 11, p: 950 }, { d: 22, p: 1900 }, { d: 33, p: 2850 },
-            { d: 44, p: 3700 }, { d: 56, p: 4400 }, { d: 86, p: 6000 },
-            { d: 112, p: 8200 }, { d: 172, p: 11400 }, { d: 257, p: 16900 },
-            { d: 343, p: 22800 }, { d: 429, p: 27500 }, { d: 514, p: 33000 },
-            { d: 600, p: 38200 }, { d: 706, p: 44200 }, { d: 878, p: 54900 }
-        ];
+        let activeCategory = 'mlbb';
 
-        const container = document.getElementById('diamond-list');
-        packages.forEach(pkg => {
-            container.innerHTML += `
-                <div class="card-item p-3 text-center cursor-pointer" onclick="order('${pkg.d} Diamonds', ${pkg.p})">
-                    <div class="text-blue-400 text-xl font-extrabold mb-1">💎 ${pkg.d}</div>
-                    <div class="text-xs font-medium text-gray-400">MLBB</div>
-                    <div class="text-xs font-extrabold text-yellow-400 mt-2">${pkg.p.toLocaleString()} Ks</div>
-                </div>
-            `;
-        });
+        // ဂိမ်းအလိုက် Data များ (စျေးအနည်းဆုံးများကို တွက်ချက်ထားသည်)
+        const gameData = {
+            mlbb: [
+                { d: 11, p: 950 }, { d: 22, p: 1900 }, { d: 33, p: 2850 },
+                { d: 44, p: 3700 }, { d: 56, p: 4400 }, { d: 86, p: 6000 },
+                { d: 112, p: 8200 }, { d: 172, p: 11400 }, { d: 257, p: 16900 },
+                { d: 343, p: 22800 }, { d: 429, p: 27500 }, { d: 514, p: 33000 },
+                { d: 600, p: 38200 }, { d: 706, p: 44200 }, { d: 878, p: 54900 }
+            ],
+            pubg: [
+                { d: 60, p: 1900 }, { d: 325, p: 9500 }, { d: 660, p: 18500 },
+                { d: 1800, p: 49500 }, { d: 3850, p: 95000 }, { d: 8100, p: 185000 }
+            ]
+        };
+
+        function switchCategory(category) {
+            activeCategory = category;
+            
+            const btnMlbb = document.getElementById('btn-mlbb');
+            const btnPubg = document.getElementById('btn-pubg');
+            const idLabel = document.getElementById('id-label');
+            const zoneLabel = document.getElementById('zone-label');
+
+            if (category === 'mlbb') {
+                btnMlbb.classList.add('active');
+                btnPubg.classList.remove('active');
+                idLabel.innerText = "Game ID (e.g. 12345678)";
+                zoneLabel.innerText = "Zone ID (e.g. 1234)";
+            } else {
+                btnPubg.classList.add('active');
+                btnMlbb.classList.remove('active');
+                idLabel.innerText = "PUBG Character ID";
+                zoneLabel.innerText = "Player Name";
+            }
+
+            renderPackages();
+        }
+
+        function renderPackages() {
+            const container = document.getElementById('package-list');
+            container.innerHTML = '';
+            
+            gameData[activeCategory].forEach(pkg => {
+                const title = activeCategory === 'mlbb' ? '💎 ' + pkg.d : '🔥 ' + pkg.d + ' UC';
+                container.innerHTML += `
+                    <div class="card-item p-3 text-center cursor-pointer" onclick="order('${pkg.d} ${activeCategory === 'mlbb' ? 'Diamonds' : 'UC'}', ${pkg.p})">
+                        <div class="text-blue-400 text-lg font-extrabold mb-1">${title}</div>
+                        <div class="text-xs font-medium text-gray-400 uppercase">${activeCategory}</div>
+                        <div class="text-xs font-extrabold text-yellow-400 mt-2">${pkg.p.toLocaleString()} Ks</div>
+                    </div>
+                `;
+            });
+        }
 
         function order(item, price) {
             const userId = document.getElementById('userId').value;
             const zoneId = document.getElementById('zoneId').value;
             const alertText = document.getElementById('id-alert');
 
-            // ID Validation
-            const isValidId = /^\d+$/.test(userId);
-            const isValidZone = /^\d+$/.test(zoneId);
-
             if (!userId || !zoneId) {
-                alert("⚠️ ကျေးဇူးပြု၍ Game ID နှင့် SV ID ကို အရင်ဖြည့်ပေးပါ!");
+                alert("⚠️ ကျေးဇူးပြု၍ အချက်အလက်များ အရင်ဖြည့်ပေးပါ!");
                 return;
             }
 
-            if (!isValidId || !isValidZone) {
-                alertText.classList.remove('hidden');
-                return;
+            // MLBB အတွက် ဂဏန်းစစ်ဆေးခြင်း (PUBG အတွက်မူ Character Name ပါနိုင်သောကြောင့် ဂဏန်းသာစစ်ဆေးရန်မလို)
+            if (activeCategory === 'mlbb') {
+                const isValidId = /^\d+$/.test(userId);
+                const isValidZone = /^\d+$/.test(zoneId);
+
+                if (!isValidId || !isValidZone) {
+                    alertText.classList.remove('hidden');
+                    return;
+                } else {
+                    alertText.classList.add('hidden');
+                }
             } else {
                 alertText.classList.add('hidden');
             }
             
-            const message = `Order: ${item}%0APrice: ${price} Ks%0AID: ${userId} (${zoneId})`;
+            const message = `Game: ${activeCategory.toUpperCase()}%0AOrder: ${item}%0APrice: ${price} Ks%0AID: ${userId} (${zoneId})`;
             window.location.href = `https://t.me/Casa4Ev1?text=${message}`;
         }
+
+        // Default စတင်သည့်အခါ MLBB Packages များကိုပြသရန်
+        switchCategory('mlbb');
     </script>
 </body>
 </html>
