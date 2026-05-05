@@ -2,95 +2,124 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Casa Game Shop | Official</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Casa Game Shop</title>
     
     <link rel="icon" type="image/png" href="https://github.com/kohtethtetnaywin015-stack/casagameshop-app/blob/main/photo_2026-05-04_16-54-06.jpg?raw=true">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500;700&display=swap');
-        body { background: #080a0f; color: #e2e8f0; font-family: 'Rajdhani', sans-serif; background-image: radial-gradient(circle at top right, #1e293b, #080a0f); min-height: 100vh; }
-        .glass-card { background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; }
-        .active-tab { background: #3b82f6; color: white; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); border-color: #3b82f6; }
-        .nav-btn { transition: 0.3s; border: 1px solid #1e293b; color: #94a3b8; font-size: 10px; font-weight: bold; padding: 10px 15px; border-radius: 12px; white-space: nowrap; flex: none; }
-        .package-card { transition: 0.2s; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); background: rgba(15, 23, 42, 0.6); }
-        .package-card:hover { border-color: #3b82f6; }
-        .selected-pkg { border-color: #3b82f6 !important; background: rgba(59, 130, 246, 0.2) !important; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        
+        :root { --primary: #3b82f6; --bg: #f8fafc; --card: #ffffff; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: #1e293b; overflow-x: hidden; padding-bottom: 100px; }
+        
+        .header-gradient { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); }
+        .step-badge { width: 24px; height: 24px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; }
+        
+        .nav-pill { white-space: nowrap; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; transition: 0.2s; border: 1px solid #e2e8f0; background: white; }
+        .nav-pill.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
+
+        .item-card { background: white; border: 2px solid transparent; border-radius: 16px; transition: 0.2s; position: relative; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .item-card.selected { border-color: var(--primary); background: #eff6ff; }
+        .item-card.selected::after { content: '\f058'; font-family: 'Font Awesome 5 Free'; font-weight: 900; position: absolute; top: 8px; right: 8px; color: var(--primary); font-size: 16px; }
+
+        .input-group { background: white; border: 1px solid #e2e8f0; border-radius: 12px; transition: 0.2s; }
+        .input-group:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+
+        .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 16px; border-top: 1px solid #e2e8f0; z-index: 50; display: flex; justify-content: center; }
+        
         .scrollbar-hide::-webkit-scrollbar { display: none; }
-        #toast { visibility: hidden; min-width: 200px; background: #3b82f6; color: white; border-radius: 8px; padding: 12px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 100; text-align: center; }
-        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
-        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
-        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
     </style>
 </head>
-<body class="p-4 max-w-lg mx-auto">
+<body>
 
-    <div id="toast">Copied!</div>
-
-    <header class="text-center mb-6 pt-4">
-        <img src="https://github.com/kohtethtetnaywin015-stack/casagameshop-app/blob/main/photo_2026-05-04_16-54-06.jpg?raw=true" alt="Casa Logo" class="w-24 h-24 mx-auto rounded-full border-2 border-blue-500 p-1 mb-3 object-cover shadow-[0_0_20px_rgba(59,130,246,0.5)]">
-        <h1 class="text-3xl font-bold tracking-tighter text-white uppercase" style="font-family: 'Orbitron';">CASA GAME SHOP</h1>
-        <p class="text-[9px] text-blue-400 tracking-[0.3em] font-bold uppercase mt-1">Diamond & Digital Service</p>
-    </header>
-
-    <nav class="flex gap-2 mb-6 overflow-x-auto pb-2 scrollbar-hide">
-        <button onclick="switchCategory('mlbb_std')" id="tab-mlbb_std" class="nav-btn active-tab">MLBB NORMAL</button>
-        <button onclick="switchCategory('mlbb_ban')" id="tab-mlbb_ban" class="nav-btn glass-card">BAN SERVER</button>
-        <button onclick="switchCategory('mlbb_indo')" id="tab-mlbb_indo" class="nav-btn glass-card">INDO SERVER</button>
-        <button onclick="switchCategory('mlbb_rus')" id="tab-mlbb_rus" class="nav-btn glass-card">RUSSIA SERVER</button>
-        <button onclick="switchCategory('mcgg')" id="tab-mcgg" class="nav-btn glass-card">MAGIC CHESS</button>
-        <button onclick="switchCategory('hok')" id="tab-hok" class="nav-btn glass-card">HONOR OF KINGS</button>
-        <button onclick="switchCategory('pubg')" id="tab-pubg" class="nav-btn glass-card">PUBG MOBILE</button>
-        <button onclick="switchCategory('ff')" id="tab-ff" class="nav-btn glass-card">FREE FIRE</button>
-        <button onclick="switchCategory('robux')" id="tab-robux" class="nav-btn glass-card">ROBUX</button>
-        <button onclick="switchCategory('coc')" id="tab-coc" class="nav-btn glass-card">COC</button>
-        <button onclick="switchCategory('genshin')" id="tab-genshin" class="nav-btn glass-card">GENSHIN</button>
-        <button onclick="switchCategory('digital')" id="tab-digital" class="nav-btn glass-card">SUBSCRIPTIONS</button>
-        <button onclick="switchCategory('others')" id="tab-others" class="nav-btn glass-card">OTHERS</button>
-    </nav>
-
-    <div id="cat-info" class="text-[11px] text-yellow-500 mb-4 font-bold text-center italic hidden"></div>
-
-    <section class="glass-card p-5 mb-5">
-        <div class="text-[10px] text-blue-400 font-bold uppercase mb-3"><i class="fas fa-id-card mr-2"></i>Order Information</div>
-        <div class="space-y-3">
-            <input type="text" id="userId" placeholder="Player ID / Username / Gmail" class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm font-bold w-full focus:border-blue-500 outline-none">
-            <input type="text" id="zoneId" placeholder="Zone ID / Password / Server" class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm font-bold w-full focus:border-blue-500 outline-none">
+    <div class="header-gradient pt-8 pb-12 px-6 rounded-b-[40px] shadow-lg mb-[-40px]">
+        <div class="flex items-center gap-4">
+            <img src="https://github.com/kohtethtetnaywin015-stack/casagameshop-app/blob/main/photo_2026-05-04_16-54-06.jpg?raw=true" class="w-16 h-16 rounded-2xl border-2 border-white/20 shadow-xl">
+            <div>
+                <h1 class="text-white text-2xl font-extrabold tracking-tight">CASA SHOP</h1>
+                <p class="text-white/70 text-xs font-semibold uppercase tracking-widest">Premium Game Top-up</p>
+            </div>
         </div>
-    </section>
+    </div>
 
-    <section id="package-section" class="mb-6">
-        <div class="text-[10px] text-blue-400 font-bold uppercase mb-3"><i class="fas fa-gem mr-2"></i>Select Items</div>
-        <div id="package-list" class="grid grid-cols-2 gap-3 max-h-[400px] overflow-y-auto pr-1">
+    <div class="px-4 max-w-lg mx-auto">
+        
+        <nav class="flex gap-2 overflow-x-auto py-6 mt-4 scrollbar-hide">
+            <button onclick="switchCategory('mlbb_std')" id="tab-mlbb_std" class="nav-pill active">MLBB</button>
+            <button onclick="switchCategory('mlbb_ban')" id="tab-mlbb_ban" class="nav-pill">Ban Server</button>
+            <button onclick="switchCategory('mlbb_indo')" id="tab-mlbb_indo" class="nav-pill">Indo</button>
+            <button onclick="switchCategory('mlbb_rus')" id="tab-mlbb_rus" class="nav-pill">Russia</button>
+            <button onclick="switchCategory('mcgg')" id="tab-mcgg" class="nav-pill">Magic Chess</button>
+            <button onclick="switchCategory('hok')" id="tab-hok" class="nav-pill">HOK</button>
+            <button onclick="switchCategory('ff')" id="tab-ff" class="nav-pill">Free Fire</button>
+            <button onclick="switchCategory('pubg')" id="tab-pubg" class="nav-pill">PUBG</button>
+            <button onclick="switchCategory('robux')" id="tab-robux" class="nav-pill">Robux</button>
+            <button onclick="switchCategory('digital')" id="tab-digital" class="nav-pill">Subs</button>
+            <button onclick="switchCategory('others')" id="tab-others" class="nav-pill">Others</button>
+        </nav>
+
+        <div id="cat-info" class="text-xs font-semibold text-amber-600 bg-amber-50 border border-amber-200 p-3 rounded-xl text-center mb-5 hidden"></div>
+
+        <section class="mb-6">
+            <div class="flex items-center gap-2 mb-4">
+                <span class="step-badge">1</span>
+                <h3 class="font-bold text-slate-800">Account Information</h3>
             </div>
-    </section>
-
-    <section class="glass-card p-5 mb-5 border-dashed border-slate-700">
-        <div class="text-[10px] text-yellow-500 font-bold uppercase mb-3 tracking-widest">KPay Payment</div>
-        <div onclick="copyNum('09943106995', 'KPay')" class="flex items-center justify-between bg-slate-900 p-3 rounded-xl border border-slate-800 cursor-pointer">
-            <div class="flex items-center gap-3">
-                <img src="https://dl.svgcdn.com/svg/arcticons/kbzpay.svg" alt="Kbzpay logo" class="w-6 h-6 rounded shadow-sm">
-                <span class="text-sm font-bold">09943106995 (Casa Admin)</span>
+            <div class="grid grid-cols-1 gap-3">
+                <div class="input-group flex items-center px-4 py-3">
+                    <i class="fas fa-user text-slate-400 mr-3"></i>
+                    <input type="text" id="userId" placeholder="Player ID / Username / Email" class="w-full outline-none text-sm font-semibold">
+                </div>
+                <div class="input-group flex items-center px-4 py-3">
+                    <i class="fas fa-hashtag text-slate-400 mr-3"></i>
+                    <input type="text" id="zoneId" placeholder="Zone ID / Server Region / Password" class="w-full outline-none text-sm font-semibold">
+                </div>
             </div>
-            <i class="far fa-copy text-slate-500 text-xs"></i>
-        </div>
-    </section>
+        </section>
 
-    <section class="glass-card p-4 mb-8">
-        <label class="block w-full h-20 bg-slate-900 border-2 border-dashed border-slate-700 rounded-2xl cursor-pointer relative overflow-hidden transition hover:border-blue-500">
-            <input type="file" id="slip" class="hidden" onchange="preview(event)" accept="image/*">
-            <div id="upload-txt" class="flex items-center justify-center h-full text-slate-500 text-[10px] font-bold uppercase">
-                <i class="fas fa-camera mr-2"></i> Upload Payment Slip
+        <section class="mb-6">
+            <div class="flex items-center gap-2 mb-4">
+                <span class="step-badge">2</span>
+                <h3 class="font-bold text-slate-800">Select Package</h3>
             </div>
-            <img id="previewImg" class="hidden absolute inset-0 w-full h-full object-contain p-2">
-        </label>
-    </section>
+            <div id="package-list" class="grid grid-cols-2 gap-3">
+                </div>
+        </section>
 
-    <button onclick="send()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 py-4 rounded-2xl font-black text-white shadow-lg uppercase tracking-widest active:scale-95 transition-all mb-10">
-        Confirm Order <i class="fas fa-check-circle ml-1"></i>
-    </button>
+        <section class="mb-6">
+            <div class="flex items-center gap-2 mb-4">
+                <span class="step-badge">3</span>
+                <h3 class="font-bold text-slate-800">Payment & Receipt</h3>
+            </div>
+            <div class="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm mb-4">
+                <div class="flex justify-between items-center mb-3">
+                    <div class="flex items-center gap-2">
+                        <img src="https://i.imgur.com/8K8zO9M.png" class="w-8 h-8 rounded-lg">
+                        <span class="text-sm font-bold text-slate-700">KPay (09786xxxxxx)</span>
+                    </div>
+                    <button onclick="copyNum('09786xxxxxx')" class="text-blue-600 text-xs font-bold bg-blue-50 px-3 py-1 rounded-full">COPY</button>
+                </div>
+                
+                <label class="block w-full border-2 border-dashed border-slate-200 rounded-xl p-4 text-center cursor-pointer hover:bg-slate-50 transition relative overflow-hidden">
+                    <input type="file" id="slip" class="hidden" onchange="preview(event)" accept="image/*">
+                    <div id="upload-hint">
+                        <i class="fas fa-cloud-upload-alt text-slate-300 text-2xl mb-2"></i>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase">Upload Payment Screenshot</p>
+                    </div>
+                    <img id="previewImg" class="hidden absolute inset-0 w-full h-full object-contain p-2 bg-white">
+                </label>
+            </div>
+        </section>
+    </div>
+
+    <div class="bottom-bar">
+        <button onclick="send()" class="w-full max-w-md header-gradient text-white py-4 rounded-2xl font-extrabold text-sm uppercase tracking-widest shadow-xl active:scale-95 transition-all">
+            Confirm and Buy Now <i class="fas fa-arrow-right ml-2"></i>
+        </button>
+    </div>
 
     <script>
         let currentCat = 'mlbb_std';
@@ -99,74 +128,92 @@
         const allData = {
             mlbb_std: [
                 {d: "11 💎", p: 900}, {d: "22 💎", p: 1800}, {d: "33 💎", p: 2700}, {d: "44 💎", p: 3500},
-                {d: "56 💎", p: 4200}, {d: "112 💎", p: 7900}, {d: "172 💎", p: 11000}, {d: "257 💎", p: 16100}, {d: "Weekly Pass", p: 6800}, {d: "Monthly Epic", p: 17300},
-                {d: "50+50 💎 (2X)", p: 3900}, {d: "150+150 💎 (2X)", p: 10900}, {d: "Mythic Emblem Pack", p: 19500}, {d: "Material Pack", p: 11600}
+                {d: "56 💎", p: 4200}, {d: "86 💎", p: 5700}, {d: "112 💎", p: 7900}, {d: "172 💎", p: 11000},
+                {d: "257 💎", p: 16100}, {d: "343 💎", p: 21800}, {d: "429 💎", p: 26200}, {d: "514 💎", p: 31800},
+                {d: "600 💎", p: 36800}, {d: "706 💎", p: 42500}, {d: "878 💎", p: 52900}, {d: "963 💎", p: 57800},
+                {d: "1049 💎", p: 63300}, {d: "1135 💎", p: 68500}, {d: "1412 💎", p: 83800}, {d: "2195 💎", p: 126500},
+                {d: "2901 💎", p: 168500}, {d: "3688 💎", p: 211500}, {d: "5532 💎", p: 319800}, {d: "9288 💎", p: 529800},
+                {d: "50+50 💎 (2X Bonus)", p: 3900}, {d: "150+150 💎 (2X Bonus)", p: 10900}, {d: "250+250 💎 (2X Bonus)", p: 17200},
+                {d: "500+500 💎 (2X Bonus)", p: 34500}
             ],
             mlbb_ban: [
-                {d: "WP (Ban Server)", p: 9500}, {d: "14 💎", p: 1200}, {d: "70 💎", p: 5500}, {d: "140 💎", p: 10900},
-                {d: "284 💎", p: 21900}, {d: "513 💎", p: 37000}, {d: "1145 💎", p: 84800}, {d: "50+50 💎 (2X)", p: 4300}
+                {d: "Weekly Pass (Ban)", p: 9500}, {d: "14 💎", p: 1300}, {d: "28 💎", p: 2600}, {d: "42 💎", p: 3900},
+                {d: "70 💎", p: 5700}, {d: "84 💎", p: 6700}, {d: "140 💎", p: 11400}, {d: "210 💎", p: 16500},
+                {d: "284 💎", p: 22500}, {d: "355 💎", p: 27700}, {d: "429 💎", p: 33800}, {d: "513 💎", p: 39800},
+                {d: "639 💎", p: 49900}, {d: "716 💎", p: 55000}, {d: "870 💎", p: 67600}, {d: "1145 💎", p: 87800},
+                {d: "1285 💎", p: 98400}, {d: "1446 💎", p: 121900}, {d: "1656 💎", p: 137800}, {d: "1875 💎", p: 159000},
+                {d: "2162 💎", p: 218400}, {d: "2976 💎", p: 271400}, {d: "3692 💎", p: 335000}, {d: "4562 💎", p: 409200},
+                {d: "5567 💎", p: 459200}, {d: "6241 💎", p: 538000}, {d: "7502 💎", p: 551000}, {d: "7786 💎", p: 636000},
+                {d: "8948 💎", p: 667900}, {d: "9377 💎", p: 748400}, {d: "10478 💎", p: 854400}, {d: "11924 💎", p: 960400},
+                {d: "13454 💎", p: 1135800}, {d: "16014 💎", p: 1450300},
+                {d: "50+50 💎 (2X Bonus)", p: 4800}, {d: "150+150 💎 (2X Bonus)", p: 14000},
+                {d: "250+250 💎 (2X Bonus)", p: 23100}, {d: "500+500 💎 (2X Bonus)", p: 46500}
             ],
             mlbb_indo: [
-                {d: "WP (Indo)", p: 8500}, {d: "19 💎", p: 1800}, {d: "44 💎", p: 3700}, {d: "85 💎", p: 6500},
-                {d: "170 💎", p: 12700}, {d: "568 💎", p: 41000}, {d: "2010 💎", p: 134000}
+                {d: "Weekly Pass (Indo)", p: 9000}, {d: "5 💎", p: 700}, {d: "12 💎", p: 1500}, {d: "19 💎", p: 2000},
+                {d: "28 💎", p: 2900}, {d: "44 💎", p: 4200}, {d: "59 💎", p: 5600}, {d: "85 💎", p: 7500},
+                {d: "170 💎", p: 13700}, {d: "240 💎", p: 18800}, {d: "296 💎", p: 22600}, {d: "408 💎", p: 32500},
+                {d: "568 💎", p: 45000}, {d: "875 💎", p: 68000}, {d: "2010 💎", p: 156000}, {d: "4830 💎", p: 368000}
             ],
             mlbb_rus: [
-                {d: "WP (Russia)", p: 9550}, {d: "35 💎", p: 3000}, {d: "55 💎", p: 4900}, {d: "165 💎", p: 14000},
-                {d: "275 💎", p: 22700}, {d: "1155 💎", p: 87500}, {d: "6000 💎", p: 420000}
+                {d: "Weekly Pass (Russia)", p: 10050}, {d: "35 💎", p: 3500}, {d: "55 💎", p: 5600},
+                {d: "165 💎", p: 16000}, {d: "275 💎", p: 24700}, {d: "565 💎", p: 46700},
+                {d: "1155 💎", p: 89500}, {d: "1765 💎", p: 135000}, {d: "2975 💎", p: 220000},
+                {d: "6000 💎", p: 440000}
             ],
             mcgg: [
-                {d: "MCGG WP", p: 7200}, {d: "11 💎", p: 900}, {d: "86 💎", p: 5700}, {d: "516 💎", p: 32000},
-                {d: "50+50 2X", p: 4000}, {d: "150+150 2X", p: 10700}, {d: "Battle Bounty", p: 3500}
+                {d: "MCGG WP", p: 7800}, {d: "11 💎", p: 1200}, {d: "22 💎", p: 2400}, {d: "56 💎", p: 5000},
+                {d: "86 💎", p: 7700}, {d: "172 💎", p: 12500}, {d: "257 💎", p: 18000}, {d: "344 💎", p: 24000},
+                {d: "516 💎", p: 35000}, {d: "706 💎", p: 46000}, {d: "1346 💎", p: 87000}, {d: "1825 💎", p: 118000},
+                {d: "2195 💎", p: 139000}, {d: "3688 💎", p: 230000}, {d: "5532 💎", p: 351000}, {d: "9288 💎", p: 559000},
+                {d: "50+50 (2X)", p: 5000}, {d: "150+150 (2X)", p: 14700}, {d: "250+250 (2X)", p: 22000},
+                {d: "500+500 (2X)", p: 43000}, {d: "Battle Discount", p: 4500}, {d: "Battle Bounty", p: 4500}
             ],
             hok: [
-                {d: "80+ Tokens", p: 4000}, {d: "160+ Tokens", p: 7900}, {d: "Weekly Card", p: 4900}, 
-                {d: "Weekly Card Plus", p: 13900}, {d: "Premium Rebate", p: 6300}, {d: "8000+ Tokens", p: 369000}
-            ],
-            pubg: [
-                {d: "60 UC", p: 3750}, {d: "325 UC", p: 18500}, {d: "660 UC", p: 37000}, {d: "Prime (1 Mo)", p: 4000},
-                {d: "Prime Plus (1 Mo)", p: 38500}, {d: "1800 Login UC", p: "Ask Price"}, {d: "8100 Login UC", p: "Ask Price"}
+                {d: "Rebate Pack", p: 2000}, {d: "Honor Point Value", p: 2300}, {d: "Double Token", p: 2300},
+                {d: "Premium Rebate", p: 6800}, {d: "Weekly Card", p: 5300}, {d: "Weekly Plus", p: 14200},
+                {d: "80+ Tokens", p: 5000}, {d: "160+ Tokens", p: 8900}, {d: "240+ Tokens", p: 12500},
+                {d: "8000+ Tokens", p: 429000}
             ],
             ff: [
-                {d: "33 💎", p: 1700}, {d: "101 💎", p: 4500}, {d: "310 💎", p: 13500}, {d: "Weekly Pass", p: 9600},
-                {d: "Monthly Pass", p: 45000}, {d: "Weekly Lite", p: 5500}
+                {d: "33 💎", p: 2000}, {d: "68 💎", p: 3500}, {d: "101 💎", p: 5400}, {d: "172 💎", p: 8100},
+                {d: "310 💎", p: 15300}, {d: "517 💎", p: 27500}, {d: "690 💎", p: 37500}, {d: "1052 💎", p: 54000},
+                {d: "1801 💎", p: 81700}, {d: "3698 💎", p: 163000}, {d: "Weekly Pass", p: 9800},
+                {d: "Monthly Pass", p: 48000}, {d: "Weekly Lite", p: 58000}
+            ],
+            pubg: [
+                {d: "60 UC", p: 4000}, {d: "120 UC", p: 8000}, {d: "180 UC", p: 12000}, {d: "325 UC", p: 22500},
+                {d: "385 UC", p: 27250}, {d: "660 UC", p: 40000}, {d: "720 UC", p: 47750}, {d: "1320 UC", p: 84000},
+                {d: "Prime 1 Mo", p: 4500}, {d: "Prime Plus 1 Mo", p: 40000}
             ],
             robux: [
-                {d: "80 Robux (ID)", p: 5300}, {d: "400 Robux (ID)", p: 22000}, {d: "1700 Robux (ID)", p: 91000},
-                {d: "80 Robux (MM)", p: 5700}, {d: "1000 Robux (MM)", p: 45000}, {d: "Premium 1m", p: 44000}
-            ],
-            coc: [
-                {d: "80 Gems", p: 2300}, {d: "500 Gems", p: 11500}, {d: "1200 Gems", p: 22200}, {d: "Gold Pass", p: "Check Price"},
-                {d: "Event Pass", p: "Check Price"}, {d: "Builder Pack", p: "Check Price"}
-            ],
-            genshin: [
-                {d: "Blessing 1m", p: 15500}, {d: "60 Crystals", p: 3100}, {d: "330 Crystals", p: 15300},
-                {d: "1090 Crystals", p: 45500}, {d: "Gnostic Hymn", p: 35000}
+                {d: "40 Robux (MM)", p: 3700}, {d: "80 Robux (MM)", p: 6300}, {d: "440 Robux (MM)", p: 23000},
+                {d: "1000 Robux (MM)", p: 47000}, {d: "Premium 1m", p: 48000},
+                {d: "40 Robux", p: 3500}, {d: "80 Robux", p: 6200}
             ],
             digital: [
-                {d: "Telegram Premium (3m)", p: 44000}, {d: "Telegram Premium (1y)", p: 111500},
-                {d: "Telegram 50 Stars", p: 3450}, {d: "Netflix 4K Private", p: 14500},
-                {d: "Capcut Prem (1m)", p: 7000}, {d: "Alight Motion (1y)", p: 4500}, {d: "Canva Edu Lifetime", p: 3000}
+                {d: "Telegram Prem (3m)", p: 45000}, {d: "Telegram Prem (1y)", p: 131500},
+                {d: "Telegram 50 Stars", p: 3600}, {d: "Netflix 4K Ultra", p: 15000},
+                {d: "Capcut Prem", p: 8000}, {d: "Canva Lifetime", p: 3500}, {d: "Alight Motion 1y", p: 5500}
             ],
             others: [
-                {d: "Bingo 20 💎", p: 2100}, {d: "Bingo 100 💎", p: 9300},
-                {d: "Eggy Party 60c", p: 3800}, {d: "Eggy Party 750c", p: 36400},
-                {d: "Arena Breakout 66", p: 3800}, {d: "Once Human 62", p: 4300},
-                {d: "Sky Season Pass", p: 31000}, {d: "Zepeto 14 zem", p: 2600}
+                {d: "Mythic Emblem Pack", p: 20500}, {d: "7 Gems", p: 1800}, {d: "14 Gems", p: 2800},
+                {d: "Bingo 20 💎", p: 2300}, {d: "Bingo 500 💎", p: 47500}, {d: "Sky Season Pass", p: 32000},
+                {d: "Once Human 62 Cryst", p: 4500}
             ]
         };
 
         const catNotes = {
             mlbb_ban: "Warning: Malay, PH, SG Servers only. Indo/Russia not available here.",
+            mlbb_rus: "Requires Supercell Gmail + OTP for account handling or ID.",
             robux: "MM Server requires Username and Password.",
-            coc: "Requires Supercell Gmail + OTP.",
-            pubg: "Login UC requires QR Scan. 10 mins process.",
-            digital: "Capcut/Alight Motion: Account Login needed."
+            digital: "Prime or Subscription needs Login Credentials."
         };
 
         function switchCategory(cat) {
             currentCat = cat; selectedItem = null;
-            document.querySelectorAll('.nav-btn').forEach(b => b.className = 'nav-btn glass-card');
-            document.getElementById(`tab-${cat}`).className = 'nav-btn active-tab';
+            document.querySelectorAll('.nav-pill').forEach(b => b.classList.remove('active'));
+            document.getElementById(`tab-${cat}`).classList.add('active');
             
             const info = document.getElementById('cat-info');
             if(catNotes[cat]) { info.innerText = catNotes[cat]; info.classList.remove('hidden'); }
@@ -177,26 +224,23 @@
         function render() {
             const list = document.getElementById('package-list');
             list.innerHTML = '';
-            allData[currentCat].forEach((item, idx) => {
+            (allData[currentCat] || []).forEach((item) => {
                 const div = document.createElement('div');
-                div.className = 'glass-card p-4 package-card text-center';
+                div.className = 'item-card p-4 text-center border-slate-100';
                 div.onclick = () => {
                     selectedItem = item;
-                    document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected-pkg'));
-                    div.classList.add('selected-pkg');
+                    document.querySelectorAll('.item-card').forEach(c => c.classList.remove('selected'));
+                    div.classList.add('selected');
                 };
-                div.innerHTML = `<div class="text-blue-400 font-bold text-xs uppercase">${item.d}</div>
-                                 <div class="text-[10px] text-yellow-500 font-bold mt-2">${typeof item.p === 'number' ? item.p.toLocaleString() + ' K' : item.p}</div>`;
+                div.innerHTML = `<div class="text-slate-800 font-bold text-xs mb-1">${item.d}</div>
+                                 <div class="text-blue-600 font-extrabold text-sm">${typeof item.p === 'number' ? item.p.toLocaleString() + ' Ks' : item.p}</div>`;
                 list.appendChild(div);
             });
         }
 
-        function copyNum(num, name) {
+        function copyNum(num) {
             navigator.clipboard.writeText(num);
-            const t = document.getElementById('toast');
-            t.innerText = `${name} Copied!`;
-            t.className = 'show';
-            setTimeout(() => t.className = '', 2500);
+            alert("KPay Number Copied!");
         }
 
         function preview(e) {
@@ -206,7 +250,7 @@
                 reader.onload = () => {
                     document.getElementById('previewImg').src = reader.result;
                     document.getElementById('previewImg').classList.remove('hidden');
-                    document.getElementById('upload-txt').classList.add('hidden');
+                    document.getElementById('upload-hint').classList.add('hidden');
                 };
                 reader.readAsDataURL(file);
             }
@@ -215,7 +259,7 @@
         function send() {
             const id = document.getElementById('userId').value;
             const zone = document.getElementById('zoneId').value;
-            if(!id || !selectedItem) return alert("Please fill info and select an item!");
+            if(!id || !selectedItem) return alert("Please fill ID and select a package!");
             const msg = `Casa Order%0ACategory: ${currentCat.toUpperCase()}%0AItem: ${selectedItem.d}%0APrice: ${selectedItem.p}%0AInfo: ${id} / ${zone}`;
             window.location.href = `https://t.me/Casa4Ev1?text=${msg}`;
         }
