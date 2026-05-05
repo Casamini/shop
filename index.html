@@ -14,11 +14,12 @@
         body { background: #080a0f; color: #e2e8f0; font-family: 'Rajdhani', sans-serif; background-image: radial-gradient(circle at top right, #1e293b, #080a0f); min-height: 100vh; }
         .glass-card { background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; }
         .active-tab { background: #3b82f6; color: white; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); border-color: #3b82f6; }
-        .game-btn { transition: 0.3s; border: 1px solid #1e293b; color: #94a3b8; font-size: 11px; font-weight: bold; }
-        .package-card { transition: 0.3s; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); background: rgba(15, 23, 42, 0.6); }
-        .package-card:hover { transform: translateY(-3px); border-color: #3b82f6; background: rgba(59, 130, 246, 0.1); }
+        .nav-btn { transition: 0.3s; border: 1px solid #1e293b; color: #94a3b8; font-size: 10px; font-weight: bold; padding: 10px 15px; border-radius: 12px; white-space: nowrap; flex: none; }
+        .package-card { transition: 0.2s; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); background: rgba(15, 23, 42, 0.6); }
+        .package-card:hover { border-color: #3b82f6; }
         .selected-pkg { border-color: #3b82f6 !important; background: rgba(59, 130, 246, 0.2) !important; }
-        #toast { visibility: hidden; min-width: 200px; background: #3b82f6; color: white; border-radius: 8px; padding: 12px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 100; font-weight: bold; text-align: center; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        #toast { visibility: hidden; min-width: 200px; background: #3b82f6; color: white; border-radius: 8px; padding: 12px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 100; text-align: center; }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
@@ -28,111 +29,164 @@
 
     <div id="toast">Copied!</div>
 
-    <header class="text-center mb-8 pt-4">
-        <img src="https://github.com/kohtethtetnaywin015-stack/casagameshop-app/blob/main/photo_2026-05-04_16-54-06.jpg?raw=true" alt="Logo" class="w-24 h-24 mx-auto rounded-full border-2 border-blue-500 p-1 shadow-[0_0_20px_rgba(59,130,246,0.4)] mb-4 object-cover">
+    <header class="text-center mb-6 pt-4">
+        <img src="https://github.com/kohtethtetnaywin015-stack/casagameshop-app/blob/main/photo_2026-05-04_16-54-06.jpg?raw=true" alt="Casa Logo" class="w-24 h-24 mx-auto rounded-full border-2 border-blue-500 p-1 mb-3 object-cover shadow-[0_0_20px_rgba(59,130,246,0.5)]">
         <h1 class="text-3xl font-bold tracking-tighter text-white uppercase" style="font-family: 'Orbitron';">CASA GAME SHOP</h1>
-        <p class="text-[10px] text-blue-400 tracking-[0.3em] font-bold uppercase mt-1">Professional Game Top-up</p>
+        <p class="text-[9px] text-blue-400 tracking-[0.3em] font-bold uppercase mt-1">Diamond & Digital Service</p>
     </header>
 
     <nav class="flex gap-2 mb-6 overflow-x-auto pb-2 scrollbar-hide">
-        <button onclick="switchGame('mlbb')" id="tab-mlbb" class="game-btn active-tab px-6 py-2 rounded-xl flex-none uppercase">Mobile Legends</button>
-        <button onclick="switchGame('pubg')" id="tab-pubg" class="game-btn glass-card px-6 py-2 rounded-xl flex-none uppercase">PUBG Mobile</button>
-        <button onclick="switchGame('bonus')" id="tab-bonus" class="game-btn glass-card px-6 py-2 rounded-xl flex-none uppercase">MLBB 2X Bonus</button>
+        <button onclick="switchCategory('mlbb_std')" id="tab-mlbb_std" class="nav-btn active-tab">MLBB NORMAL</button>
+        <button onclick="switchCategory('mlbb_ban')" id="tab-mlbb_ban" class="nav-btn glass-card">BAN SERVER</button>
+        <button onclick="switchCategory('mlbb_indo')" id="tab-mlbb_indo" class="nav-btn glass-card">INDO SERVER</button>
+        <button onclick="switchCategory('mlbb_rus')" id="tab-mlbb_rus" class="nav-btn glass-card">RUSSIA SERVER</button>
+        <button onclick="switchCategory('mcgg')" id="tab-mcgg" class="nav-btn glass-card">MAGIC CHESS</button>
+        <button onclick="switchCategory('hok')" id="tab-hok" class="nav-btn glass-card">HONOR OF KINGS</button>
+        <button onclick="switchCategory('pubg')" id="tab-pubg" class="nav-btn glass-card">PUBG MOBILE</button>
+        <button onclick="switchCategory('ff')" id="tab-ff" class="nav-btn glass-card">FREE FIRE</button>
+        <button onclick="switchCategory('robux')" id="tab-robux" class="nav-btn glass-card">ROBUX</button>
+        <button onclick="switchCategory('coc')" id="tab-coc" class="nav-btn glass-card">COC</button>
+        <button onclick="switchCategory('genshin')" id="tab-genshin" class="nav-btn glass-card">GENSHIN</button>
+        <button onclick="switchCategory('digital')" id="tab-digital" class="nav-btn glass-card">SUBSCRIPTIONS</button>
+        <button onclick="switchCategory('others')" id="tab-others" class="nav-btn glass-card">OTHERS</button>
     </nav>
 
-    <section class="glass-card p-5 mb-6">
-        <div class="text-[10px] text-blue-400 font-bold uppercase mb-4 tracking-widest"><i class="fas fa-id-card mr-2"></i>Account Info</div>
-        <div class="grid grid-cols-2 gap-4">
-            <input type="text" id="userId" placeholder="Player ID" class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm font-bold w-full focus:border-blue-500 outline-none">
-            <input type="text" id="zoneId" placeholder="Zone ID / Name" class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm font-bold w-full focus:border-blue-500 outline-none">
-        </div>
-    </section>
+    <div id="cat-info" class="text-[11px] text-yellow-500 mb-4 font-bold text-center italic hidden"></div>
 
-    <section class="mb-6">
-        <div class="text-[10px] text-blue-400 font-bold uppercase mb-4 tracking-widest"><i class="fas fa-shopping-cart mr-2"></i>Select Package</div>
-        <div id="package-list" class="grid grid-cols-3 gap-3 min-h-[100px]">
-            </div>
-    </section>
-
-    <section class="glass-card p-5 mb-6 border-dashed border-slate-600">
-        <div class="text-[10px] text-yellow-500 font-bold uppercase mb-4 tracking-widest">Payment (Click to Copy)</div>
+    <section class="glass-card p-5 mb-5">
+        <div class="text-[10px] text-blue-400 font-bold uppercase mb-3"><i class="fas fa-id-card mr-2"></i>Order Information</div>
         <div class="space-y-3">
-            <div onclick="copyNum('09943106995', 'KPay')" class="flex items-center justify-between bg-slate-900 p-3 rounded-xl border border-slate-800 cursor-pointer hover:bg-slate-800">
-                <div class="flex items-center gap-3">
-                    <img src="https://www.kbzpay.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fblue-L.c7123311.webp&w=128&q=75" class="w-7 h-7 rounded-md" alt="KPay">
-                    <span class="text-sm font-bold">09943106995</span>
-                </div>
-                <i class="far fa-copy text-slate-500 text-xs"></i>
-            </div>
+            <input type="text" id="userId" placeholder="Player ID / Username / Gmail" class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm font-bold w-full focus:border-blue-500 outline-none">
+            <input type="text" id="zoneId" placeholder="Zone ID / Password / Server" class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm font-bold w-full focus:border-blue-500 outline-none">
         </div>
     </section>
 
-    <section class="glass-card p-5 mb-8">
-        <label class="block w-full h-24 bg-slate-900 border-2 border-dashed border-slate-700 rounded-2xl cursor-pointer relative overflow-hidden transition hover:border-blue-500">
+    <section id="package-section" class="mb-6">
+        <div class="text-[10px] text-blue-400 font-bold uppercase mb-3"><i class="fas fa-gem mr-2"></i>Select Items</div>
+        <div id="package-list" class="grid grid-cols-2 gap-3 max-h-[400px] overflow-y-auto pr-1">
+            </div>
+    </section>
+
+    <section class="glass-card p-5 mb-5 border-dashed border-slate-700">
+        <div class="text-[10px] text-yellow-500 font-bold uppercase mb-3 tracking-widest">KPay Payment</div>
+        <div onclick="copyNum('09786xxxxxx', 'KPay')" class="flex items-center justify-between bg-slate-900 p-3 rounded-xl border border-slate-800 cursor-pointer">
+            <div class="flex items-center gap-3">
+                <img src="https://i.imgur.com/8K8zO9M.png" class="w-6 h-6 rounded shadow-sm">
+                <span class="text-sm font-bold">09786xxxxxx (Casa Admin)</span>
+            </div>
+            <i class="far fa-copy text-slate-500 text-xs"></i>
+        </div>
+    </section>
+
+    <section class="glass-card p-4 mb-8">
+        <label class="block w-full h-20 bg-slate-900 border-2 border-dashed border-slate-700 rounded-2xl cursor-pointer relative overflow-hidden transition hover:border-blue-500">
             <input type="file" id="slip" class="hidden" onchange="preview(event)" accept="image/*">
-            <div id="upload-txt" class="flex flex-col items-center justify-center h-full text-slate-500">
-                <i class="fas fa-camera text-xl mb-1"></i>
-                <span class="text-[10px] font-bold uppercase">Upload Payment Receipt</span>
+            <div id="upload-txt" class="flex items-center justify-center h-full text-slate-500 text-[10px] font-bold uppercase">
+                <i class="fas fa-camera mr-2"></i> Upload Payment Slip
             </div>
             <img id="previewImg" class="hidden absolute inset-0 w-full h-full object-contain p-2">
         </label>
     </section>
 
-    <button onclick="send()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 py-4 rounded-2xl font-black text-white shadow-lg hover:scale-[1.02] active:scale-95 transition-all mb-10 uppercase tracking-widest">
-        Place Order via Telegram <i class="fas fa-paper-plane ml-2"></i>
+    <button onclick="send()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 py-4 rounded-2xl font-black text-white shadow-lg uppercase tracking-widest active:scale-95 transition-all mb-10">
+        Confirm Order <i class="fas fa-check-circle ml-1"></i>
     </button>
 
-    <footer class="text-center pb-10 opacity-30">
-        <p class="text-[9px] font-bold tracking-[0.3em] uppercase">Casa Game Shop Premium v3.0</p>
-    </footer>
-
     <script>
-        let currentGame = 'mlbb';
-        let selectedPkg = null;
+        let currentCat = 'mlbb_std';
+        let selectedItem = null;
 
-        const allPrices = {
-            mlbb: [
+        const allData = {
+            mlbb_std: [
                 {d: "11 💎", p: 900}, {d: "22 💎", p: 1800}, {d: "33 💎", p: 2700}, {d: "44 💎", p: 3500},
-                {d: "56 💎", p: 4200}, {d: "86 💎", p: 5700}, {d: "112 💎", p: 7900}, {d: "172 💎", p: 11000},
-                {d: "257 💎", p: 16100}, {d: "343 💎", p: 21800}, {d: "429 💎", p: 26200}, {d: "514 💎", p: 31800},
-                {d: "Weekly Pass", p: 6800}, {d: "600 💎", p: 36800}, {d: "706 💎", p: 42500}, {d: "878 💎", p: 52900}
+                {d: "56 💎", p: 4200}, {d: "112 💎", p: 7900}, {d: "Weekly Pass", p: 6800}, {d: "Monthly Epic", p: 17300},
+                {d: "50+50 💎 (2X)", p: 3900}, {d: "150+150 💎 (2X)", p: 10900}, {d: "Mythic Emblem Pack", p: 19500}, {d: "Material Pack", p: 11600}
+            ],
+            mlbb_ban: [
+                {d: "WP (Ban Server)", p: 9500}, {d: "14 💎", p: 1200}, {d: "70 💎", p: 5500}, {d: "140 💎", p: 10900},
+                {d: "284 💎", p: 21900}, {d: "513 💎", p: 37000}, {d: "1145 💎", p: 84800}, {d: "50+50 💎 (2X)", p: 4300}
+            ],
+            mlbb_indo: [
+                {d: "WP (Indo)", p: 8500}, {d: "19 💎", p: 1800}, {d: "44 💎", p: 3700}, {d: "85 💎", p: 6500},
+                {d: "170 💎", p: 12700}, {d: "568 💎", p: 41000}, {d: "2010 💎", p: 134000}
+            ],
+            mlbb_rus: [
+                {d: "WP (Russia)", p: 9550}, {d: "35 💎", p: 3000}, {d: "55 💎", p: 4900}, {d: "165 💎", p: 14000},
+                {d: "275 💎", p: 22700}, {d: "1155 💎", p: 87500}, {d: "6000 💎", p: 420000}
+            ],
+            mcgg: [
+                {d: "MCGG WP", p: 7200}, {d: "11 💎", p: 900}, {d: "86 💎", p: 5700}, {d: "516 💎", p: 32000},
+                {d: "50+50 2X", p: 4000}, {d: "150+150 2X", p: 10700}, {d: "Battle Bounty", p: 3500}
+            ],
+            hok: [
+                {d: "80+ Tokens", p: 4000}, {d: "160+ Tokens", p: 7900}, {d: "Weekly Card", p: 4900}, 
+                {d: "Weekly Card Plus", p: 13900}, {d: "Premium Rebate", p: 6300}, {d: "8000+ Tokens", p: 369000}
             ],
             pubg: [
-                {d: "60 UC", p: 1850}, {d: "325 UC", p: 9200}, {d: "660 UC", p: 18200},
-                {d: "1800 UC", p: 48500}, {d: "3850 UC", p: 93500}, {d: "8100 UC", p: 185000}
+                {d: "60 UC", p: 3750}, {d: "325 UC", p: 18500}, {d: "660 UC", p: 37000}, {d: "Prime (1 Mo)", p: 4000},
+                {d: "Prime Plus (1 Mo)", p: 38500}, {d: "1800 Login UC", p: "Ask Price"}, {d: "8100 Login UC", p: "Ask Price"}
             ],
-            bonus: [
-                {d: "50+50 💎", p: 3900}, {d: "150+150 💎", p: 10900},
-                {d: "250+250 💎", p: 17200}, {d: "500+500 💎", p: 34500}
+            ff: [
+                {d: "33 💎", p: 1700}, {d: "101 💎", p: 4500}, {d: "310 💎", p: 13500}, {d: "Weekly Pass", p: 9600},
+                {d: "Monthly Pass", p: 45000}, {d: "Weekly Lite", p: 5500}
+            ],
+            robux: [
+                {d: "80 Robux (ID)", p: 5300}, {d: "400 Robux (ID)", p: 22000}, {d: "1700 Robux (ID)", p: 91000},
+                {d: "80 Robux (MM)", p: 5700}, {d: "1000 Robux (MM)", p: 45000}, {d: "Premium 1m", p: 44000}
+            ],
+            coc: [
+                {d: "80 Gems", p: 2300}, {d: "500 Gems", p: 11500}, {d: "1200 Gems", p: 22200}, {d: "Gold Pass", p: "Check Price"},
+                {d: "Event Pass", p: "Check Price"}, {d: "Builder Pack", p: "Check Price"}
+            ],
+            genshin: [
+                {d: "Blessing 1m", p: 15500}, {d: "60 Crystals", p: 3100}, {d: "330 Crystals", p: 15300},
+                {d: "1090 Crystals", p: 45500}, {d: "Gnostic Hymn", p: 35000}
+            ],
+            digital: [
+                {d: "Telegram Premium (3m)", p: 44000}, {d: "Telegram Premium (1y)", p: 111500},
+                {d: "Telegram 50 Stars", p: 3450}, {d: "Netflix 4K Private", p: 14500},
+                {d: "Capcut Prem (1m)", p: 7000}, {d: "Alight Motion (1y)", p: 4500}, {d: "Canva Edu Lifetime", p: 3000}
+            ],
+            others: [
+                {d: "Bingo 20 💎", p: 2100}, {d: "Bingo 100 💎", p: 9300},
+                {d: "Eggy Party 60c", p: 3800}, {d: "Eggy Party 750c", p: 36400},
+                {d: "Arena Breakout 66", p: 3800}, {d: "Once Human 62", p: 4300},
+                {d: "Sky Season Pass", p: 31000}, {d: "Zepeto 14 zem", p: 2600}
             ]
         };
 
-        function switchGame(game) {
-            currentGame = game;
-            selectedPkg = null;
-            document.querySelectorAll('.game-btn').forEach(b => b.classList.remove('active-tab', 'glass-card'));
-            document.querySelectorAll('.game-btn').forEach(b => b.classList.add('glass-card'));
-            document.getElementById(`tab-${game}`).classList.add('active-tab');
-            document.getElementById(`tab-${game}`).classList.remove('glass-card');
+        const catNotes = {
+            mlbb_ban: "Warning: Malay, PH, SG Servers only. Indo/Russia not available here.",
+            robux: "MM Server requires Username and Password.",
+            coc: "Requires Supercell Gmail + OTP.",
+            pubg: "Login UC requires QR Scan. 10 mins process.",
+            digital: "Capcut/Alight Motion: Account Login needed."
+        };
+
+        function switchCategory(cat) {
+            currentCat = cat; selectedItem = null;
+            document.querySelectorAll('.nav-btn').forEach(b => b.className = 'nav-btn glass-card');
+            document.getElementById(`tab-${cat}`).className = 'nav-btn active-tab';
+            
+            const info = document.getElementById('cat-info');
+            if(catNotes[cat]) { info.innerText = catNotes[cat]; info.classList.remove('hidden'); }
+            else { info.classList.add('hidden'); }
             render();
         }
 
         function render() {
             const list = document.getElementById('package-list');
             list.innerHTML = '';
-            allPrices[currentGame].forEach((item, idx) => {
+            allData[currentCat].forEach((item, idx) => {
                 const div = document.createElement('div');
                 div.className = 'glass-card p-4 package-card text-center';
-                div.id = `pkg-${idx}`;
                 div.onclick = () => {
-                    selectedPkg = item;
+                    selectedItem = item;
                     document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected-pkg'));
                     div.classList.add('selected-pkg');
                 };
-                div.innerHTML = `
-                    <div class="text-blue-400 font-black text-xs">${item.d}</div>
-                    <div class="text-[10px] text-yellow-500 font-bold mt-2">${item.p.toLocaleString()} K</div>
-                `;
+                div.innerHTML = `<div class="text-blue-400 font-bold text-xs uppercase">${item.d}</div>
+                                 <div class="text-[10px] text-yellow-500 font-bold mt-2">${typeof item.p === 'number' ? item.p.toLocaleString() + ' K' : item.p}</div>`;
                 list.appendChild(div);
             });
         }
@@ -140,9 +194,9 @@
         function copyNum(num, name) {
             navigator.clipboard.writeText(num);
             const t = document.getElementById('toast');
-            t.innerText = `${name} Number Copied!`;
+            t.innerText = `${name} Copied!`;
             t.className = 'show';
-            setTimeout(() => t.className = '', 3000);
+            setTimeout(() => t.className = '', 2500);
         }
 
         function preview(e) {
@@ -150,11 +204,10 @@
             if(file) {
                 const reader = new FileReader();
                 reader.onload = () => {
-                    const img = document.getElementById('previewImg');
-                    img.src = reader.result;
-                    img.classList.remove('hidden');
+                    document.getElementById('previewImg').src = reader.result;
+                    document.getElementById('previewImg').classList.remove('hidden');
                     document.getElementById('upload-txt').classList.add('hidden');
-                }
+                };
                 reader.readAsDataURL(file);
             }
         }
@@ -162,13 +215,12 @@
         function send() {
             const id = document.getElementById('userId').value;
             const zone = document.getElementById('zoneId').value;
-            if(!id || !zone || !selectedPkg) return alert("⚠️ အချက်အလက်များ အကုန်ဖြည့်စွက်ပေးပါ။");
-            const msg = `Game: ${currentGame.toUpperCase()}%0AItem: ${selectedPkg.d}%0APrice: ${selectedPkg.p} Ks%0AID: ${id} (${zone})%0A---%0APayment Slip attached.`;
+            if(!id || !selectedItem) return alert("Please fill info and select an item!");
+            const msg = `Casa Order%0ACategory: ${currentCat.toUpperCase()}%0AItem: ${selectedItem.d}%0APrice: ${selectedItem.p}%0AInfo: ${id} / ${zone}`;
             window.location.href = `https://t.me/Casa4Ev1?text=${msg}`;
         }
 
-        // App ပွင့်လာတာနဲ့ MLBB စျေးနှုန်းတွေကို တန်းပြပေးရန်
-        window.onload = render;
+        window.onload = () => switchCategory('mlbb_std');
     </script>
 </body>
 </html>
