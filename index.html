@@ -12,16 +12,14 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
         
-        :root { --primary: #3b82f6; --bg: #f8fafc; --card: #ffffff; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: #1e293b; overflow-x: hidden; padding-bottom: 100px; }
+        :root { --primary: #3b82f6; --bg: #f8fafc; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: #1e293b; overflow-x: hidden; padding-bottom: 120px; }
         
         .header-gradient { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); }
-        .step-badge { width: 24px; height: 24px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; }
-        
-        .nav-pill { white-space: nowrap; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; transition: 0.2s; border: 1px solid #e2e8f0; background: white; }
+        .nav-pill { white-space: nowrap; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; transition: 0.2s; border: 1px solid #e2e8f0; background: white; }
         .nav-pill.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
 
-        .item-card { background: white; border: 2px solid transparent; border-radius: 16px; transition: 0.2s; position: relative; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .item-card { background: white; border: 2px solid transparent; border-radius: 16px; transition: 0.2s; position: relative; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .item-card.selected { border-color: var(--primary); background: #eff6ff; }
         .item-card.selected::after { content: '\f058'; font-family: 'Font Awesome 5 Free'; font-weight: 900; position: absolute; top: 8px; right: 8px; color: var(--primary); font-size: 16px; }
 
@@ -29,7 +27,6 @@
         .input-group:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
 
         .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 16px; border-top: 1px solid #e2e8f0; z-index: 50; display: flex; justify-content: center; }
-        
         .scrollbar-hide::-webkit-scrollbar { display: none; }
     </style>
 </head>
@@ -46,69 +43,59 @@
     </div>
 
     <div class="px-4 max-w-lg mx-auto">
-        
         <nav class="flex gap-2 overflow-x-auto py-6 mt-4 scrollbar-hide">
             <button onclick="switchCategory('mlbb_std')" id="tab-mlbb_std" class="nav-pill active">MLBB</button>
             <button onclick="switchCategory('mlbb_ban')" id="tab-mlbb_ban" class="nav-pill">Ban Server</button>
             <button onclick="switchCategory('mlbb_indo')" id="tab-mlbb_indo" class="nav-pill">Indo</button>
             <button onclick="switchCategory('mlbb_rus')" id="tab-mlbb_rus" class="nav-pill">Russia</button>
-            <button onclick="switchCategory('mcgg')" id="tab-mcgg" class="nav-pill">Magic Chess</button>
+            <button onclick="switchCategory('mcgg')" id="tab-mcgg" class="nav-pill">MCGG</button>
+            <button onclick="switchCategory('roblox')" id="tab-roblox" class="nav-pill">Roblox</button>
             <button onclick="switchCategory('hok')" id="tab-hok" class="nav-pill">HOK</button>
             <button onclick="switchCategory('ff')" id="tab-ff" class="nav-pill">Free Fire</button>
             <button onclick="switchCategory('pubg')" id="tab-pubg" class="nav-pill">PUBG</button>
-            <button onclick="switchCategory('robux')" id="tab-robux" class="nav-pill">Robux</button>
-            <button onclick="switchCategory('digital')" id="tab-digital" class="nav-pill">Subs</button>
-            <button onclick="switchCategory('others')" id="tab-others" class="nav-pill">Others</button>
+            <button onclick="switchCategory('coc')" id="tab-coc" class="nav-pill">COC</button>
+            <button onclick="switchCategory('heartopia')" id="tab-heartopia" class="nav-pill">Heartopia</button>
+            <button onclick="switchCategory('arena')" id="tab-arena" class="nav-pill">Arena Breakout</button>
+            <button onclick="switchCategory('blood')" id="tab-blood" class="nav-pill">Blood Strike</button>
+            <button onclick="switchCategory('once')" id="tab-once" class="nav-pill">Once Human</button>
+            <button onclick="switchCategory('sky')" id="tab-sky" class="nav-pill">Sky</button>
+            <button onclick="switchCategory('digital')" id="tab-digital" class="nav-pill">Digital, iTunes, Bingo</button>
         </nav>
 
         <div id="cat-info" class="text-xs font-semibold text-amber-600 bg-amber-50 border border-amber-200 p-3 rounded-xl text-center mb-5 hidden"></div>
 
         <section class="mb-6">
             <div class="flex items-center gap-2 mb-4">
-                <span class="step-badge">1</span>
+                <span class="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs font-bold">1</span>
                 <h3 class="font-bold text-slate-800">Account Information</h3>
             </div>
             <div class="grid grid-cols-1 gap-3">
-                <div class="input-group flex items-center px-4 py-3">
-                    <i class="fas fa-user text-slate-400 mr-3"></i>
-                    <input type="text" id="userId" placeholder="Player ID / Username / Email" class="w-full outline-none text-sm font-semibold">
-                </div>
-                <div class="input-group flex items-center px-4 py-3">
-                    <i class="fas fa-hashtag text-slate-400 mr-3"></i>
-                    <input type="text" id="zoneId" placeholder="Zone ID / Server Region / Password" class="w-full outline-none text-sm font-semibold">
-                </div>
+                <input type="text" id="userId" placeholder="Player ID / Username / Email" class="input-group px-4 py-3 outline-none text-sm font-semibold">
+                <input type="text" id="zoneId" placeholder="Zone ID / Server / Password" class="input-group px-4 py-3 outline-none text-sm font-semibold">
             </div>
         </section>
 
         <section class="mb-6">
             <div class="flex items-center gap-2 mb-4">
-                <span class="step-badge">2</span>
+                <span class="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs font-bold">2</span>
                 <h3 class="font-bold text-slate-800">Select Package</h3>
             </div>
-            <div id="package-list" class="grid grid-cols-2 gap-3">
-                </div>
+            <div id="package-list" class="grid grid-cols-2 gap-3"></div>
         </section>
 
         <section class="mb-6">
             <div class="flex items-center gap-2 mb-4">
-                <span class="step-badge">3</span>
-                <h3 class="font-bold text-slate-800">Payment & Receipt</h3>
+                <span class="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs font-bold">3</span>
+                <h3 class="font-bold text-slate-800">Payment (KPay)</h3>
             </div>
-            <div class="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm mb-4">
+            <div class="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm">
                 <div class="flex justify-between items-center mb-3">
-                    <div class="flex items-center gap-2">
-                        <img src="https://play-lh.googleusercontent.com/cnKJYzzHFAE5ZRepCsGVhv7ZnoDfK8Wu5z6lMefeT-45fTNfUblK_gF3JyW5VZsjFc4=w480-h960-rw" class="w-8 h-8 rounded-lg">
-                        <span class="text-sm font-bold text-slate-700">KPay (09943106995)</span>
-                    </div>
+                    <span class="text-sm font-bold text-slate-700">09943106995 (KPay)</span>
                     <button onclick="copyNum('09943106995')" class="text-blue-600 text-xs font-bold bg-blue-50 px-3 py-1 rounded-full">COPY</button>
                 </div>
-                
-                <label class="block w-full border-2 border-dashed border-slate-200 rounded-xl p-4 text-center cursor-pointer hover:bg-slate-50 transition relative overflow-hidden">
+                <label class="block w-full border-2 border-dashed border-slate-200 rounded-xl p-4 text-center cursor-pointer relative overflow-hidden">
                     <input type="file" id="slip" class="hidden" onchange="preview(event)" accept="image/*">
-                    <div id="upload-hint">
-                        <i class="fas fa-cloud-upload-alt text-slate-300 text-2xl mb-2"></i>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase">Upload Payment Screenshot</p>
-                    </div>
+                    <div id="upload-hint"><p class="text-xs font-bold text-slate-400">UPLOAD SLIP</p></div>
                     <img id="previewImg" class="hidden absolute inset-0 w-full h-full object-contain p-2 bg-white">
                 </label>
             </div>
@@ -116,9 +103,7 @@
     </div>
 
     <div class="bottom-bar">
-        <button onclick="send()" class="w-full max-w-md header-gradient text-white py-4 rounded-2xl font-extrabold text-sm uppercase tracking-widest shadow-xl active:scale-95 transition-all">
-            Confirm and Buy Now <i class="fas fa-arrow-right ml-2"></i>
-        </button>
+        <button onclick="send()" class="w-full max-w-md header-gradient text-white py-4 rounded-2xl font-extrabold text-sm uppercase tracking-widest shadow-xl">Confirm & Order Now</button>
     </div>
 
     <script>
@@ -127,18 +112,14 @@
 
         const allData = {
             mlbb_std: [
-                {d: "Limited Time Value Pack", p: 1200},
-                {d: "Weekly Elite Bundle (55 💎 + 20 ⭐)", p: 3600},
-                {d: "Monthly Epic Bundle (275 💎 + 180 ⭐)", p: 17300},
-                {d: "Weekly Pass", p: 6800},
-                {d: "11 💎", p: 900}, {d: "22 💎", p: 1800}, {d: "33 💎", p: 2700}, {d: "44 💎", p: 3500},
+                {d: "Limited Time Value Pack", p: 1200}, {d: "Weekly Elite Bundle", p: 3600}, {d: "Monthly Epic Bundle", p: 17300},
+                {d: "Weekly Pass", p: 6800}, {d: "11 💎", p: 900}, {d: "22 💎", p: 1800}, {d: "33 💎", p: 2700}, {d: "44 💎", p: 3500},
                 {d: "56 💎", p: 4200}, {d: "86 💎", p: 5700}, {d: "112 💎", p: 7900}, {d: "172 💎", p: 11000},
                 {d: "257 💎", p: 16100}, {d: "343 💎", p: 21800}, {d: "429 💎", p: 26200}, {d: "514 💎", p: 31800},
                 {d: "600 💎", p: 36800}, {d: "706 💎", p: 42500}, {d: "878 💎", p: 52900}, {d: "963 💎", p: 57800},
                 {d: "1049 💎", p: 63300}, {d: "1135 💎", p: 68500}, {d: "1412 💎", p: 83800}, {d: "2195 💎", p: 126500},
                 {d: "2901 💎", p: 168500}, {d: "3688 💎", p: 211500}, {d: "5532 💎", p: 319800}, {d: "9288 💎", p: 529800},
-                {d: "50+50 💎 (2X Bonus)", p: 3900}, {d: "150+150 💎 (2X Bonus)", p: 10900}, {d: "250+250 💎 (2X Bonus)", p: 17200},
-                {d: "500+500 💎 (2X Bonus)", p: 34500}
+                {d: "50+50 💎 (2X)", p: 3900}, {d: "150+150 💎 (2X)", p: 10900}, {d: "250+250 💎 (2X)", p: 17200}, {d: "500+500 💎 (2X)", p: 34500}
             ],
             mlbb_ban: [
                 {d: "Weekly Pass (Ban)", p: 9500}, {d: "14 💎", p: 1300}, {d: "28 💎", p: 2600}, {d: "42 💎", p: 3900},
@@ -149,9 +130,8 @@
                 {d: "2162 💎", p: 218400}, {d: "2976 💎", p: 271400}, {d: "3692 💎", p: 335000}, {d: "4562 💎", p: 409200},
                 {d: "5567 💎", p: 459200}, {d: "6241 💎", p: 538000}, {d: "7502 💎", p: 551000}, {d: "7786 💎", p: 636000},
                 {d: "8948 💎", p: 667900}, {d: "9377 💎", p: 748400}, {d: "10478 💎", p: 854400}, {d: "11924 💎", p: 960400},
-                {d: "13454 💎", p: 1135800}, {d: "16014 💎", p: 1450300},
-                {d: "50+50 💎 (2X Bonus)", p: 4800}, {d: "150+150 💎 (2X Bonus)", p: 14000},
-                {d: "250+250 💎 (2X Bonus)", p: 23100}, {d: "500+500 💎 (2X Bonus)", p: 46500}
+                {d: "13454 💎", p: 1135800}, {d: "16014 💎", p: 1450300}, {d: "50+50 (2X)", p: 4800}, {d: "150+150 (2X)", p: 14000},
+                {d: "250+250 (2X)", p: 23100}, {d: "500+500 (2X)", p: 46500}
             ],
             mlbb_indo: [
                 {d: "Weekly Pass (Indo)", p: 9000}, {d: "5 💎", p: 700}, {d: "12 💎", p: 1500}, {d: "19 💎", p: 2000},
@@ -162,8 +142,7 @@
             mlbb_rus: [
                 {d: "Weekly Pass (Russia)", p: 10050}, {d: "35 💎", p: 3500}, {d: "55 💎", p: 5600},
                 {d: "165 💎", p: 16000}, {d: "275 💎", p: 24700}, {d: "565 💎", p: 46700},
-                {d: "1155 💎", p: 89500}, {d: "1765 💎", p: 135000}, {d: "2975 💎", p: 220000},
-                {d: "6000 💎", p: 440000}
+                {d: "1155 💎", p: 89500}, {d: "1765 💎", p: 135000}, {d: "2975 💎", p: 220000}, {d: "6000 💎", p: 440000}
             ],
             mcgg: [
                 {d: "MCGG WP", p: 7800}, {d: "11 💎", p: 1200}, {d: "22 💎", p: 2400}, {d: "56 💎", p: 5000},
@@ -174,51 +153,69 @@
                 {d: "500+500 (2X)", p: 43000}, {d: "Battle Discount", p: 4500}, {d: "Battle Bounty", p: 4500}
             ],
             hok: [
-                {d: "Rebate Pack", p: 2000}, {d: "Honor Point Value", p: 2300}, {d: "Double Token", p: 2300},
+                {d: "Rebate Pack", p: 2000}, {d: "Honor Point", p: 2300}, {d: "Double Token", p: 2300},
                 {d: "Premium Rebate", p: 6800}, {d: "Weekly Card", p: 5300}, {d: "Weekly Plus", p: 14200},
-                {d: "80+ Tokens", p: 5000}, {d: "160+ Tokens", p: 8900}, {d: "240+ Tokens", p: 12500},
-                {d: "8000+ Tokens", p: 429000}
+                {d: "80+ Tokens", p: 5000}, {d: "160+ Tokens", p: 8900}, {d: "240+ Tokens", p: 12500}, {d: "8000+ Tokens", p: 429000}
             ],
             ff: [
                 {d: "33 💎", p: 2000}, {d: "68 💎", p: 3500}, {d: "101 💎", p: 5400}, {d: "172 💎", p: 8100},
                 {d: "310 💎", p: 15300}, {d: "517 💎", p: 27500}, {d: "690 💎", p: 37500}, {d: "1052 💎", p: 54000},
-                {d: "1801 💎", p: 81700}, {d: "3698 💎", p: 163000}, {d: "Weekly Pass", p: 9800},
-                {d: "Monthly Pass", p: 48000}, {d: "Weekly Lite", p: 58000}
+                {d: "1801 💎", p: 81700}, {d: "3698 💎", p: 163000}, {d: "Weekly Pass", p: 9800}, {d: "Monthly Pass", p: 48000}, {d: "Weekly Lite", p: 58000}
             ],
             pubg: [
                 {d: "60 UC", p: 4000}, {d: "120 UC", p: 8000}, {d: "180 UC", p: 12000}, {d: "325 UC", p: 22500},
                 {d: "385 UC", p: 27250}, {d: "660 UC", p: 40000}, {d: "720 UC", p: 47750}, {d: "1320 UC", p: 84000},
                 {d: "Prime 1 Mo", p: 4500}, {d: "Prime Plus 1 Mo", p: 40000}
             ],
-            robux: [
+            roblox: [
                 {d: "40 Robux (MM)", p: 3700}, {d: "80 Robux (MM)", p: 6300}, {d: "440 Robux (MM)", p: 23000},
-                {d: "1000 Robux (MM)", p: 47000}, {d: "Premium 1m", p: 48000},
-                {d: "40 Robux", p: 3500}, {d: "80 Robux", p: 6200}
+                {d: "1000 Robux (MM)", p: 47000}, {d: "Premium 1m", p: 48000}, {d: "40 Robux", p: 3500}, {d: "80 Robux", p: 6200}
+            ],
+            coc: [
+                {d: "80 Gems", p: 2500}, {d: "500 Gems", p: 12000}, {d: "1200 Gems", p: 23200}, {d: "2500 Gems", p: 46000},
+                {d: "Gold Pass (1.49$)", p: 8500}, {d: "Gold Pass (4.99$)", p: 22500}, {d: "Builder Pack", p: 5200}
+            ],
+            heartopia: [
+                {d: "Junior Member", p: 3000}, {d: "Formal Member", p: 15500}, {d: "60 Heart", p: 4900}, 
+                {d: "320 Heart", p: 24900}, {d: "1370 Heart", p: 99900}, {d: "3000 Heart", p: 215000}
+            ],
+            arena: [
+                {d: "66 Bonds", p: 4000}, {d: "335 Bonds", p: 18000}, {d: "675 Bonds", p: 34500}, 
+                {d: "1690 Bonds", p: 87000}, {d: "3400 Bonds", p: 177000}
+            ],
+            blood: [
+                {d: "105 Gold", p: 3600}, {d: "320 Gold", p: 9800}, {d: "1100 Gold", p: 33500}, 
+                {d: "Annual Pass", p: 4800}, {d: "Strike Pass Elite", p: 20000}
+            ],
+            once: [
+                {d: "62 Crystgin", p: 4500}, {d: "339 Crystgin", p: 21900}, {d: "1120 Crystgin", p: 63500},
+                {d: "Meta Pass (30d)", p: 22000}, {d: "Battle Pass (Adv)", p: 43200}
+            ],
+            sky: [
+                {d: "Season Pass Reg", p: 32000}, {d: "Journey Pack", p: 76500}, {d: "72 Regular Candles", p: 66000}
             ],
             digital: [
-                {d: "Telegram Prem (3m)", p: 45000}, {d: "Telegram Prem (1y)", p: 131500},
-                {d: "Telegram 50 Stars", p: 3600}, {d: "Netflix 4K Ultra", p: 15000},
-                {d: "Capcut Prem", p: 8000}, {d: "Canva Lifetime", p: 3500}, {d: "Alight Motion 1y", p: 5500}
-            ],
-            others: [
-                {d: "Mythic Emblem Pack", p: 20500}, {d: "7 Gems", p: 1800}, {d: "14 Gems", p: 2800},
-                {d: "Bingo 20 💎", p: 2300}, {d: "Bingo 500 💎", p: 47500}, {d: "Sky Season Pass", p: 32000},
-                {d: "Once Human 62 Cryst", p: 4500}
+                {d: "Telegram Prem (3m)", p: 45000}, {d: "Telegram Prem (1y)", p: 131500}, {d: "Telegram 50 Stars", p: 3600},
+                {d: "Netflix 4K Ultra", p: 15000}, {d: "Capcut Prem", p: 8000}, {d: "Canva Lifetime", p: 3500}, {d: "Alight Motion 1y", p: 5500},
+                {d: "iTunes 2$ USA", p: 9100}, {d: "iTunes 5$ USA", p: 22750}, {d: "iTunes 10$ USA", p: 45500}, {d: "iTunes 20$ USA", p: 91000},
+                {d: "Bingo 20 💎", p: 2300}, {d: "Bingo 100 💎", p: 9700}, {d: "Bingo 500 💎", p: 47500}
             ]
         };
 
         const catNotes = {
-            mlbb_ban: "Warning: Malay, PH, SG Servers only. Indo/Russia not available here.",
-            mlbb_rus: "Requires Supercell Gmail + OTP for account handling or ID.",
-            robux: "MM Server requires Username and Password.",
-            digital: "Prime or Subscription needs Login Credentials."
+            mlbb_ban: "Malay, PH, SG Servers only.",
+            mcgg: "Magic Chess Go Go - Account ID & Zone ID required.",
+            roblox: "MM Server requires Username & Password.",
+            coc: "Supercell Gmail + OTP Required.",
+            digital: "iTunes USA Rate: 4550. Others may need login.",
+            once: "ID + Server Region + Server Name Required.",
+            heartopia: "ID + Server + AID Required."
         };
 
         function switchCategory(cat) {
             currentCat = cat; selectedItem = null;
             document.querySelectorAll('.nav-pill').forEach(b => b.classList.remove('active'));
             document.getElementById(`tab-${cat}`).classList.add('active');
-            
             const info = document.getElementById('cat-info');
             if(catNotes[cat]) { info.innerText = catNotes[cat]; info.classList.remove('hidden'); }
             else { info.classList.add('hidden'); }
@@ -236,16 +233,13 @@
                     document.querySelectorAll('.item-card').forEach(c => c.classList.remove('selected'));
                     div.classList.add('selected');
                 };
-                div.innerHTML = `<div class="text-slate-800 font-bold text-xs mb-1">${item.d}</div>
-                                 <div class="text-blue-600 font-extrabold text-sm">${typeof item.p === 'number' ? item.p.toLocaleString() + ' Ks' : item.p}</div>`;
+                div.innerHTML = `<div class="text-slate-800 font-bold text-[11px] mb-1">${item.d}</div>
+                                 <div class="text-blue-600 font-extrabold text-sm">${item.p.toLocaleString()} Ks</div>`;
                 list.appendChild(div);
             });
         }
 
-        function copyNum(num) {
-            navigator.clipboard.writeText(num);
-            alert("KPay Number Copied!");
-        }
+        function copyNum(num) { navigator.clipboard.writeText(num); alert("KPay Number Copied!"); }
 
         function preview(e) {
             const file = e.target.files[0];
@@ -263,8 +257,8 @@
         function send() {
             const id = document.getElementById('userId').value;
             const zone = document.getElementById('zoneId').value;
-            if(!id || !selectedItem) return alert("Please fill ID and select a package!");
-            const msg = `Casa Order%0ACategory: ${currentCat.toUpperCase()}%0AItem: ${selectedItem.d}%0APrice: ${selectedItem.p}%0AInfo: ${id} / ${zone}`;
+            if(!id || !selectedItem) return alert("Please fill info and select package!");
+            const msg = `Casa Order%0ACategory: ${currentCat.toUpperCase()}%0AItem: ${selectedItem.d}%0APrice: ${selectedItem.p.toLocaleString()} Ks%0AInfo: ${id} / ${zone}`;
             window.location.href = `https://t.me/Casa4Ev1?text=${msg}`;
         }
 
