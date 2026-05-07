@@ -10,16 +10,18 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
         :root { --primary: #3b82f6; --bg: #f8fafc; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: #1e293b; padding-bottom: 120px; margin: 0; }
-        /* Layout Fix: Header height and alignment */
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: #1e293b; padding-bottom: 100px; margin: 0; }
         .header-gradient { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); min-height: 160px; }
         .nav-pill { white-space: nowrap; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid #e2e8f0; background: white; flex-shrink: 0; }
         .nav-pill.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
         .item-card { background: white; border: 2px solid transparent; border-radius: 16px; transition: 0.2s; position: relative; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .item-card.selected { border-color: var(--primary); background: #eff6ff; }
-        .item-card.selected::after { content: '\f058'; font-family: 'Font Awesome 5 Free'; font-weight: 900; position: absolute; top: 8px; right: 8px; color: var(--primary); font-size: 16px; }
         .input-group { background: white; border: 1px solid #e2e8f0; border-radius: 12px; width: 100%; }
-        .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 16px; border-top: 1px solid #e2e8f0; z-index: 100; display: flex; justify-content: center; }
+        
+        /* ခလုတ်ကို ပုံမှန်ဆိုဒ်ပြန်ပြင်ထားသည့်အပိုင်း */
+        .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 12px 20px; border-top: 1px solid #e2e8f0; z-index: 100; }
+        .submit-btn { width: 100%; max-width: 400px; margin: 0 auto; display: block; background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; py: 14px; border-radius: 12px; font-weight: 700; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); height: 50px; }
+        
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         #previewImg { z-index: 10; width: 100%; height: 100%; object-fit: contain; background: white; }
         .loading-state { opacity: 0.6; pointer-events: none; }
@@ -49,15 +51,8 @@
             <button onclick="switchCategory('ff')" id="tab-ff" class="nav-pill">Free Fire</button>
             <button onclick="switchCategory('pubg')" id="tab-pubg" class="nav-pill">PUBG</button>
             <button onclick="switchCategory('coc')" id="tab-coc" class="nav-pill">COC</button>
-            <button onclick="switchCategory('heartopia')" id="tab-heartopia" class="nav-pill">Heartopia</button>
-            <button onclick="switchCategory('arena')" id="tab-arena" class="nav-pill">Arena Breakout</button>
-            <button onclick="switchCategory('blood')" id="tab-blood" class="nav-pill">Blood Strike</button>
-            <button onclick="switchCategory('once')" id="tab-once" class="nav-pill">Once Human</button>
-            <button onclick="switchCategory('sky')" id="tab-sky" class="nav-pill">Sky</button>
-            <button onclick="switchCategory('digital')" id="tab-digital" class="nav-pill">Digital, iTunes, Bingo</button>
+            <button onclick="switchCategory('digital')" id="tab-digital" class="nav-pill">Digital</button>
         </nav>
-
-        <div id="cat-info" class="text-xs font-semibold text-amber-600 bg-amber-50 border border-amber-200 p-3 rounded-xl text-center mb-5 hidden"></div>
 
         <section class="mb-6">
             <div class="flex items-center gap-2 mb-4">
@@ -65,8 +60,8 @@
                 <h3 class="font-bold">Account Info</h3>
             </div>
             <div class="flex flex-col gap-3">
-                <input type="text" id="userId" placeholder="Player ID / Username" class="input-group px-4 py-3 outline-none text-sm font-semibold shadow-sm">
-                <input type="text" id="zoneId" placeholder="Zone ID / Server / Password" class="input-group px-4 py-3 outline-none text-sm font-semibold shadow-sm">
+                <input type="text" id="userId" placeholder="Player ID / Username" class="input-group px-4 py-3 outline-none text-sm font-semibold">
+                <input type="text" id="zoneId" placeholder="Zone ID / Server / Password" class="input-group px-4 py-3 outline-none text-sm font-semibold">
             </div>
         </section>
 
@@ -81,7 +76,7 @@
         <section class="mb-6">
             <div class="flex items-center gap-2 mb-4">
                 <span class="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs font-bold">3</span>
-                <h3 class="font-bold text-slate-800">Payment (09943106995)</h3>
+                <h3 class="font-bold">Payment (09943106995)</h3>
             </div>
             <div class="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm">
                 <div class="flex justify-between items-center mb-4">
@@ -101,11 +96,10 @@
     </div>
 
     <div class="bottom-bar">
-        <button id="confirmBtn" onclick="send()" class="w-full max-w-md header-gradient text-white py-4 rounded-2xl font-extrabold text-sm uppercase tracking-widest shadow-xl">Confirm & Order</button>
+        <button id="confirmBtn" onclick="send()" class="submit-btn">Confirm & Order</button>
     </div>
 
     <script>
-        // Updated Credentials
         const BOT_TOKEN = '8499424443:AAFfOS1Dtj-O5WUW3weoWYmHGXxUqYWpcCY'; 
         const CHAT_ID = '5024679577';
 
@@ -113,41 +107,23 @@
         let selectedItem = null;
 
         const allData = {
-            mlbb_std: [{d: "Limited Time Value Pack", p: 1200}, {d: "Weekly Elite Bundle", p: 3600}, {d: "Monthly Epic Bundle", p: 17300}, {d: "Weekly Pass", p: 6800}, {d: "11 💎", p: 900}, {d: "22 💎", p: 1800}, {d: "33 💎", p: 2700}, {d: "44 💎", p: 3500}, {d: "56 💎", p: 4200}, {d: "86 💎", p: 5700}, {d: "112 💎", p: 7900}, {d: "172 💎", p: 11000}, {d: "257 💎", p: 16100}, {d: "343 💎", p: 21800}, {d: "429 💎", p: 26200}, {d: "514 💎", p: 31800}, {d: "600 💎", p: 36800}, {d: "706 💎", p: 42500}, {d: "878 💎", p: 52900}, {d: "963 💎", p: 57800}, {d: "1049 💎", p: 63300}, {d: "1135 💎", p: 68500}, {d: "1412 💎", p: 83800}, {d: "2195 💎", p: 126500}, {d: "2901 💎", p: 168500}, {d: "3688 💎", p: 211500}, {d: "5532 💎", p: 319800}, {d: "9288 💎", p: 529800}, {d: "50+50 💎 (2X)", p: 3900}, {d: "150+150 💎 (2X)", p: 10900}, {d: "250+250 💎 (2X)", p: 17200}, {d: "500+500 💎 (2X)", p: 34500}],
-            mlbb_ban: [{d: "Weekly Pass (Ban)", p: 9500}, {d: "14 💎", p: 1300}, {d: "28 💎", p: 2600}, {d: "42 💎", p: 3900}, {d: "70 💎", p: 5700}, {d: "84 💎", p: 6700}, {d: "140 💎", p: 11400}, {d: "210 💎", p: 16500}, {d: "284 💎", p: 22500}, {d: "355 💎", p: 27700}, {d: "429 💎", p: 33800}, {d: "513 💎", p: 39800}, {d: "639 💎", p: 49900}, {d: "716 💎", p: 55000}, {d: "870 💎", p: 67600}, {d: "1145 💎", p: 87800}, {d: "1285 💎", p: 98400}, {d: "1446 💎", p: 121900}, {d: "1656 💎", p: 137800}, {d: "1875 💎", p: 159000}, {d: "2162 💎", p: 218400}, {d: "2976 💎", p: 271400}, {d: "3692 💎", p: 335000}, {d: "4562 💎", p: 409200}, {d: "5567 💎", p: 459200}, {d: "6241 💎", p: 538000}, {d: "7502 💎", p: 551000}, {d: "7786 💎", p: 636000}, {d: "8948 💎", p: 667900}, {d: "9377 💎", p: 748400}, {d: "10478 💎", p: 854400}, {d: "11924 💎", p: 960400}, {d: "13454 💎", p: 1135800}, {d: "16014 💎", p: 1450300}, {d: "50+50 (2X)", p: 4800}, {d: "150+150 (2X)", p: 14000}, {d: "250+250 (2X)", p: 23100}, {d: "500+500 (2X)", p: 46500}],
-            mlbb_indo: [{d: "Weekly Pass (Indo)", p: 9000}, {d: "5 💎", p: 700}, {d: "12 💎", p: 1500}, {d: "19 💎", p: 2000}, {d: "28 💎", p: 2900}, {d: "44 💎", p: 4200}, {d: "59 💎", p: 5600}, {d: "85 💎", p: 7500}, {d: "170 💎", p: 13700}, {d: "240 💎", p: 18800}, {d: "296 💎", p: 22600}, {d: "408 💎", p: 32500}, {d: "568 💎", p: 45000}, {d: "875 💎", p: 68000}, {d: "2010 💎", p: 156000}, {d: "4830 💎", p: 368000}],
-            mlbb_rus: [{d: "Weekly Pass (Russia)", p: 10050}, {d: "35 💎", p: 3500}, {d: "55 💎", p: 5600}, {d: "165 💎", p: 16000}, {d: "275 💎", p: 24700}, {d: "565 💎", p: 46700}, {d: "1155 💎", p: 89500}, {d: "1765 💎", p: 135000}, {d: "2975 💎", p: 220000}, {d: "6000 💎", p: 440000}],
-            mcgg: [{d: "MCGG WP", p: 7800}, {d: "11 💎", p: 1200}, {d: "22 💎", p: 2400}, {d: "56 💎", p: 5000}, {d: "86 💎", p: 7700}, {d: "172 💎", p: 12500}, {d: "257 💎", p: 18000}, {d: "344 💎", p: 24000}, {d: "516 💎", p: 35000}, {d: "706 💎", p: 46000}, {d: "1346 💎", p: 87000}, {d: "1825 💎", p: 118000}, {d: "2195 💎", p: 139000}, {d: "3688 💎", p: 230000}, {d: "5532 💎", p: 351000}, {d: "9288 💎", p: 559000}, {d: "50+50 (2X)", p: 5000}, {d: "150+150 (2X)", p: 14700}, {d: "250+250 (2X)", p: 22000}, {d: "500+500 (2X)", p: 43000}, {d: "Battle Discount", p: 4500}, {d: "Battle Bounty", p: 4500}],
-            hok: [{d: "Rebate Pack", p: 2000}, {d: "Honor Point", p: 2300}, {d: "Double Token", p: 2300}, {d: "Premium Rebate", p: 6800}, {d: "Weekly Card", p: 5300}, {d: "Weekly Plus", p: 14200}, {d: "80+ Tokens", p: 5000}, {d: "160+ Tokens", p: 8900}, {d: "240+ Tokens", p: 12500}, {d: "8000+ Tokens", p: 429000}],
-            ff: [{d: "33 💎", p: 2000}, {d: "68 💎", p: 3500}, {d: "101 💎", p: 5400}, {d: "172 💎", p: 8100}, {d: "310 💎", p: 15300}, {d: "517 💎", p: 27500}, {d: "690 💎", p: 37500}, {d: "1052 💎", p: 54000}, {d: "1801 💎", p: 81700}, {d: "3698 💎", p: 163000}, {d: "Weekly Pass", p: 9800}, {d: "Monthly Pass", p: 48000}, {d: "Weekly Lite", p: 58000}],
-            pubg: [{d: "60 UC", p: 4000}, {d: "120 UC", p: 8000}, {d: "180 UC", p: 12000}, {d: "325 UC", p: 22500}, {d: "385 UC", p: 27250}, {d: "660 UC", p: 40000}, {d: "720 UC", p: 47750}, {d: "1320 UC", p: 84000}, {d: "Prime 1 Mo", p: 4500}, {d: "Prime Plus 1 Mo", p: 40000}],
-            roblox: [{d: "40 Robux (MM)", p: 3700}, {d: "80 Robux (MM)", p: 6300}, {d: "440 Robux (MM)", p: 23000}, {d: "1000 Robux (MM)", p: 47000}, {d: "Premium 1m", p: 48000}, {d: "40 Robux", p: 3500}, {d: "80 Robux", p: 6200}],
-            coc: [{d: "80 Gems", p: 2500}, {d: "500 Gems", p: 12000}, {d: "1200 Gems", p: 23200}, {d: "2500 Gems", p: 46000}, {d: "Gold Pass (1.49$)", p: 8500}, {d: "Gold Pass (4.99$)", p: 22500}, {d: "Builder Pack", p: 5200}],
-            heartopia: [{d: "Junior Member", p: 3000}, {d: "Formal Member", p: 15500}, {d: "60 Heart", p: 4900}, {d: "320 Heart", p: 24900}, {d: "1370 Heart", p: 99900}, {d: "3000 Heart", p: 215000}],
-            arena: [{d: "66 Bonds", p: 4000}, {d: "335 Bonds", p: 18000}, {d: "675 Bonds", p: 34500}, {d: "1690 Bonds", p: 87000}, {d: "3400 Bonds", p: 177000}],
-            blood: [{d: "105 Gold", p: 3600}, {d: "320 Gold", p: 9800}, {d: "1100 Gold", p: 33500}, {d: "Annual Pass", p: 4800}, {d: "Strike Pass Elite", p: 20000}],
-            once: [{d: "62 Crystgin", p: 4500}, {d: "339 Crystgin", p: 21900}, {d: "1120 Crystgin", p: 63500}, {d: "Meta Pass (30d)", p: 22000}, {d: "Battle Pass (Adv)", p: 43200}],
-            sky: [{d: "Season Pass Reg", p: 32000}, {d: "Journey Pack", p: 76500}, {d: "72 Regular Candles", p: 66000}],
-            digital: [{d: "Telegram Prem (3m)", p: 45000}, {d: "Telegram Prem (1y)", p: 131500}, {d: "Telegram 50 Stars", p: 3600}, {d: "Netflix 4K Ultra", p: 15000}, {d: "Capcut Prem", p: 8000}, {d: "Canva Lifetime", p: 3500}, {d: "Alight Motion 1y", p: 5500}, {d: "iTunes 2$ USA", p: 9100}, {d: "iTunes 5$ USA", p: 22750}, {d: "iTunes 10$ USA", p: 45500}, {d: "iTunes 20$ USA", p: 91000}, {d: "Bingo 20 💎", p: 2300}, {d: "Bingo 100 💎", p: 9700}, {d: "Bingo 500 💎", p: 47500}]
-        };
-
-        const catNotes = {
-            mlbb_ban: "Malay, PH, SG Servers only.",
-            mcgg: "Magic Chess Go Go - ID & Zone required.",
-            roblox: "MM Server requires Username & Password.",
-            coc: "Supercell Gmail + OTP Required.",
-            digital: "iTunes USA Rate: 4550. Others may need login.",
-            once: "ID + Server Region + Server Name Required.",
-            heartopia: "ID + Server + AID Required."
+            mlbb_std: [{d: "Weekly Pass", p: 6800}, {d: "86 💎", p: 5700}, {d: "172 💎", p: 11000}, {d: "257 💎", p: 16100}],
+            mlbb_ban: [{d: "Weekly Pass (Ban)", p: 9500}, {d: "70 💎", p: 5700}],
+            mlbb_indo: [{d: "Weekly Pass (Indo)", p: 9000}, {d: "85 💎", p: 7500}],
+            mlbb_rus: [{d: "Weekly Pass (Russia)", p: 10050}, {d: "165 💎", p: 16000}],
+            mcgg: [{d: "MCGG WP", p: 7800}, {d: "86 💎", p: 7700}],
+            hok: [{d: "Weekly Card", p: 5300}, {d: "80+ Tokens", p: 5000}],
+            ff: [{d: "Weekly Pass", p: 9800}, {d: "172 💎", p: 8100}],
+            pubg: [{d: "60 UC", p: 4000}, {d: "325 UC", p: 22500}],
+            roblox: [{d: "80 Robux", p: 6200}, {d: "400 Robux", p: 23000}],
+            coc: [{d: "80 Gems", p: 2500}, {d: "Gold Pass", p: 22500}],
+            digital: [{d: "Telegram Prem (3m)", p: 45000}, {d: "iTunes 5$ USA", p: 22750}]
         };
 
         function switchCategory(cat) {
             currentCat = cat; selectedItem = null;
             document.querySelectorAll('.nav-pill').forEach(b => b.classList.remove('active'));
             document.getElementById(`tab-${cat}`).classList.add('active');
-            const info = document.getElementById('cat-info');
-            if(catNotes[cat]) { info.innerText = catNotes[cat]; info.classList.remove('hidden'); }
-            else { info.classList.add('hidden'); }
             render();
         }
 
@@ -193,7 +169,7 @@
             if(!id || !selectedItem) return alert("Please fill info and select package!");
             if(!slipFile) return alert("Please upload payment slip photo!");
 
-            btn.innerText = "Sending Order...";
+            btn.innerText = "Processing...";
             btn.classList.add('loading-state');
 
             const orderMsg = `🔔 NEW ORDER! \n--------------------\nGame: ${currentCat.toUpperCase()}\nItem: ${selectedItem.d}\nPrice: ${selectedItem.p.toLocaleString()} Ks\nInfo: ${id} / ${zone}`;
@@ -214,10 +190,10 @@
                     location.reload();
                 } else {
                     const errData = await response.json();
-                    alert("Failed to send. Error: " + errData.description);
+                    alert("Error: " + errData.description);
                 }
             } catch (err) {
-                alert("Connection Error. Please check your internet.");
+                alert("Connection Error. Try again.");
             } finally {
                 btn.innerText = "Confirm & Order";
                 btn.classList.remove('loading-state');
